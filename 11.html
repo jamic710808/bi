@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DAX 函數查詢系統</title>
+<style>
+:root { --bg:#0b0c10; --fg:#e6e6e6; --muted:#a9b0b8; --card:#151821; --accent:#4fc3f7; --accent-2:#64ffda; --border:#263241; }
+:root.light { --bg:#fafafa; --fg:#1a1a1a; --muted:#5a6672; --card:#ffffff; --accent:#1565c0; --accent-2:#00897b; --border:#e6e8eb; }
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC",Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+header{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--border)}
+.header-inner{display:flex;gap:12px;align-items:center;padding:10px 14px}
+.brand{font-weight:700;letter-spacing:.5px}
+.search-wrap{position:relative;flex:1}
+#q{width:100%;padding:10px 40px 10px 36px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--fg);outline:none}
+.search-wrap .kbd{position:absolute;right:8px;top:6px;color:var(--muted);border:1px solid var(--border);padding:2px 6px;border-radius:6px;font-size:12px}
+.search-wrap .icon{position:absolute;left:10px;top:10px;opacity:.7}
+.actions{display:flex;gap:8px}
+button,.chip{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:10px;padding:8px 12px;cursor:pointer}
+button:hover,.chip:hover{border-color:var(--accent)}
+main{display:grid;grid-template-columns:260px 1fr;gap:14px;padding:14px}
+@media(max-width:960px){main{grid-template-columns:1fr}}
+aside{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px}
+.section-title{font-size:13px;color:var(--muted);margin:6px 0 8px}
+.category{display:flex;flex-wrap:wrap;gap:8px}
+.chip.active{border-color:var(--accent-2);color:var(--accent-2)}
+.list{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0}
+.item{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.item:last-child{border-bottom:none}
+.item .name{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono","Noto Sans Mono",monospace;font-weight:600}
+.item .desc{color:var(--muted);font-size:13px}
+.item .grow{flex:1}
+.kbd-inline{font-size:12px;color:var(--muted)}
+footer{padding:20px;color:var(--muted);text-align:center}
+.dropdown{position:absolute;top:44px;left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;max-height:320px;overflow:auto;display:none}
+.dd-item{padding:8px 12px;border-bottom:1px solid var(--border);cursor:pointer}
+.dd-item:last-child{border-bottom:none}
+.dd-item.active{background:rgba(79,195,247,.15)}
+.modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:12px;max-width:860px;width:100%;max-height:85vh;overflow:auto}
+.modal header{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--border)}
+.modal .hd{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.code{background:#0a0d14;color:#e6f0ff;padding:10px;border-radius:10px;overflow:auto;border:1px solid #202b3a}
+:root.light .code{background:#0f172a}
+.badge{color:var(--accent-2);border:1px solid var(--accent-2);font-size:12px;padding:2px 6px;border-radius:999px}
+.pagination{display:flex;gap:8px;justify-content:center;padding:12px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="brand">DAX 函數查詢</div>
+    <div class="search-wrap">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input id="q" type="search" placeholder="搜尋函數或輸入名稱…" autocomplete="off">
+      <span class="kbd">/</span>
+      <div id="dd" class="dropdown"></div>
+    </div>
+    <div class="actions">
+      <button id="themeBtn" aria-label="主題">主題</button>
+      <button id="clearBtn" aria-label="清除">清除</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <aside>
+    <div class="section-title">類別瀏覽</div>
+    <div id="cats" class="category"></div>
+    <div class="section-title">說明</div>
+    <div class="kbd-inline">鍵盤：/ 搜尋、Alt+↓ 展開、Enter 開啟詳情</div>
+  </aside>
+
+  <section class="list">
+    <div id="list"></div>
+    <div class="pagination" id="pager"></div>
+  </section>
+</main>
+
+<footer>
+  內容對齊 Microsoft DAX 函式參考；後續可替換資料為完整清單以擴充[web:11]。
+</footer>
+
+<div id="mask" class="modal-mask" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <header>
+      <div class="hd">
+        <div>
+          <span id="m-name" class="name" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700"></span>
+          <span id="m-cat" class="badge"></span>
+        </div>
+        <div class="controls">
+          <button id="speakBtn">播放</button>
+          <button id="pauseBtn">暫停</button>
+          <button id="closeBtn">關閉</button>
+        </div>
+      </div>
+    </header>
+    <div style="padding:12px 16px;">
+      <div id="m-desc" style="color:var(--muted);margin-bottom:8px;"></div>
+      <div><strong>語法</strong></div>
+      <pre class="code"><code id="m-syntax"></code></pre>
+      <div style="margin-top:8px"><strong>用途</strong></div>
+      <div id="m-usage" style="margin-bottom:8px;"></div>
+      <div><strong>回傳型別</strong></div>
+      <div id="m-returns" style="margin-bottom:8px;"></div>
+      <div><strong>範例</strong></div>
+      <pre class="code"><code id="m-ex"></code></pre>
+      <div style="margin-top:8px"><strong>相容性與備註</strong></div>
+      <div id="m-notes"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 來源：Microsoft DAX 函式參考（之後可換為完整 JSON），目前放入示例函數以便立即使用[web:11].
+
+const DAX_DATA = [
+  { name:"SUM", category:"Aggregation",
+    description:"對資料行或表達式結果進行加總並回傳純量值。",
+    syntax:"SUM(<column>)",
+    usage:"常用於彙總數值欄位，例如銷售金額的總和。",
+    returns:"數值",
+    examples:"Total Sales = SUM(Sales[Amount])",
+    notes:"可與 CALCULATE 與篩選函數搭配以控制脈絡。" },
+  { name:"CALCULATE", category:"Filter",
+    description:"以修改篩選脈絡後重新評估表達式的結果，是 DAX 的核心函數之一。",
+    syntax:"CALCULATE(<expression>, <filter1>, <filter2>, ...)",
+    usage:"對量值在特定條件下重新計算，如僅限某產品或期間。",
+    returns:"與 <expression> 相同的型別",
+    examples:"Sales TY = CALCULATE([Total Sales], 'Date'[IsThisYear] = TRUE())",
+    notes:"篩選引數為 filter table 或布林條件；與 REMOVEFILTERS 等配合常見。" },
+  { name:"DATESYTD", category:"Time Intelligence",
+    description:"回傳年初至今的日期集合，以利製作 YTD 計算。",
+    syntax:"DATESYTD(<dates>, [<year_end_date>])",
+    usage:"搭配 CALCULATE 聚合量值完成 YTD 聚合。",
+    returns:"日期表 (Table)",
+    examples:"Sales YTD = CALCULATE([Total Sales], DATESYTD('Date'[Date]))",
+    notes:"需有連續日期表與正確標記的日期表。" },
+  { name:"INFO.MEASURES", category:"Information",
+    description:"以表格形式回傳模型中的量值清單與屬性，利於模型文件化。",
+    syntax:"INFO.MEASURES()",
+    usage:"在 DAX Query View 產出量值清單或對量值做統計。",
+    returns:"表格 (Table)",
+    examples:"EVALUATE INFO.MEASURES()",
+    notes:"INFO.* 系列可與其他 INFO 函數 JOIN 使用。" },
+  { name:"INFO.TABLES", category:"Information",
+    description:"回傳模型的資料表清單與屬性（例如是否隱藏）。",
+    syntax:"INFO.TABLES()",
+    usage:"與 INFO.MEASURES 連接可找出量值的 Home Table。",
+    returns:"表格 (Table)",
+    examples:
+`EVALUATE
+SELECTCOLUMNS(
+  INFO.TABLES(),
+  "TableID",[ID], "Table",[Name], "IsHidden",[IsHidden]
+)`,
+    notes:"僅於支援 DAX Query View 的環境使用。" }
+];
+
+const CATEGORIES = ["All","Aggregation","Filter","Time Intelligence","Table manipulation","Text","Logical","Math & Trig","Statistical","Information","Relationship","Parent-child","Financial","Other"];
+
+const store = { state:{ theme: localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: light)").matches ? "light":"dark"), keyword:"", category:"All", page:1, perPage:20 }, save(){localStorage.setItem("theme", this.state.theme);} };
+function applyTheme(){ if(store.state.theme==="light") document.documentElement.classList.add("light"); else document.documentElement.classList.remove("light"); }
+applyTheme();
+
+function filterData(){
+  const kw = store.state.keyword.trim().toLowerCase();
+  const cat = store.state.category;
+  return DAX_DATA.filter(d=>{
+    const inCat = (cat==="All") || d.category===cat;
+    const text = (d.name+" "+d.description+" "+d.usage).toLowerCase();
+    const inKw = !kw || text.includes(kw);
+    return inCat && inKw;
+  }).sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+const catsEl = document.getElementById("cats");
+const listEl = document.getElementById("list");
+const pagerEl = document.getElementById("pager");
+const qEl = document.getElementById("q");
+const ddEl = document.getElementById("dd");
+
+function renderCats(){
+  catsEl.innerHTML=""; CATEGORIES.forEach(c=>{
+    const el=document.createElement("button");
+    el.className="chip"+(store.state.category===c?" active":"");
+    el.textContent=c;
+    el.onclick=()=>{store.state.category=c; store.state.page=1; render();};
+    catsEl.appendChild(el);
+  });
+}
+function renderList(){
+  const data=filterData();
+  const start=(store.state.page-1)*store.state.perPage;
+  const pageData=data.slice(start, start+store.state.perPage);
+  listEl.innerHTML="";
+  pageData.forEach(rec=>{
+    const row=document.createElement("div");
+    row.className="item";
+    row.innerHTML=`
+      <div class="grow">
+        <div class="name">${rec.name}</div>
+        <div class="desc">${rec.description}</div>
+      </div>
+      <div class="controls">
+        <button data-act="speak" data-name="${rec.name}">播放</button>
+        <button data-act="pause">暫停</button>
+        <button data-act="detail" data-name="${rec.name}">查看詳細介紹</button>
+      </div>`;
+    row.addEventListener("click",(e)=>{
+      const t=e.target; if(t.tagName!=="BUTTON") return;
+      const act=t.getAttribute("data-act");
+      if(act==="speak") speakName(t.getAttribute("data-name"));
+      else if(act==="pause") speechSynthesis.cancel();
+      else if(act==="detail") openDetail(findByName(t.getAttribute("data-name")));
+    });
+    listEl.appendChild(row);
+  });
+  const total=Math.ceil(data.length/store.state.perPage)||1;
+  renderPager(total);
+}
+function renderPager(total){
+  pagerEl.innerHTML=""; if(total<=1) return;
+  const prev=document.createElement("button"); prev.textContent="上一頁"; prev.disabled=store.state.page===1; prev.onclick=()=>{store.state.page--; renderList();};
+  const next=document.createElement("button"); next.textContent="下一頁"; next.disabled=store.state.page===total; next.onclick=()=>{store.state.page++; renderList();};
+  pagerEl.append(prev);
+  for(let i=1;i<=total && i<=7;i++){ const b=document.createElement("button"); b.textContent=i; b.disabled=i===store.state.page; b.onclick=()=>{store.state.page=i; renderList();}; pagerEl.append(b); }
+  pagerEl.append(next);
+}
+function renderDropdown(){
+  const data=filterData().slice(0,30);
+  if(!store.state.keyword){ ddEl.style.display="none"; return; }
+  ddEl.innerHTML="";
+  data.forEach((r,i)=>{
+    const el=document.createElement("div");
+    el.className="dd-item"+(i===0?" active":"");
+    el.textContent=r.name+" — "+r.description;
+    el.onclick=()=>{ openDetail(r); hideDropdown(); };
+    ddEl.appendChild(el);
+  });
+  ddEl.style.display=data.length?"block":"none";
+}
+function hideDropdown(){ ddEl.style.display="none"; }
+
+const mask=document.getElementById("mask");
+const mName=document.getElementById("m-name");
+const mCat=document.getElementById("m-cat");
+const mDesc=document.getElementById("m-desc");
+const mSyntax=document.getElementById("m-syntax");
+const mUsage=document.getElementById("m-usage");
+const mReturns=document.getElementById("m-returns");
+const mEx=document.getElementById("m-ex");
+function findByName(n){ return DAX_DATA.find(x=>x.name===n); }
+function openDetail(rec){
+  if(!rec) return;
+  mName.textContent=rec.name; mCat.textContent=rec.category; mDesc.textContent=rec.description;
+  mSyntax.textContent=rec.syntax; mUsage.textContent=rec.usage; mReturns.textContent=rec.returns; mEx.textContent=rec.examples;
+  mask.style.display="flex"; mask.setAttribute("aria-hidden","false");
+}
+function closeDetail(){ mask.style.display="none"; mask.setAttribute("aria-hidden","true"); }
+document.getElementById("closeBtn").onclick=closeDetail;
+mask.addEventListener("click",(e)=>{ if(e.target===mask) closeDetail(); });
+
+function speakName(text){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang="en-US"; speechSynthesis.speak(u);}catch(e){} }
+document.getElementById("speakBtn").onclick=()=>speakName(mName.textContent);
+document.getElementById("pauseBtn").onclick=()=>speechSynthesis.cancel();
+
+qEl.addEventListener("input", ()=>{ store.state.keyword=qEl.value; store.state.page=1; renderList(); renderDropdown(); });
+qEl.addEventListener("focus", renderDropdown);
+qEl.addEventListener("blur", ()=> setTimeout(hideDropdown, 150));
+document.getElementById("clearBtn").onclick=()=>{ qEl.value=""; store.state.keyword=""; render(); hideDropdown(); };
+document.getElementById("themeBtn").onclick=()=>{ store.state.theme=(store.state.theme==="light"?"dark":"light"); store.save(); applyTheme(); };
+
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="/" && document.activeElement!==qEl){ e.preventDefault(); qEl.focus(); }
+  else if(e.altKey && e.key==="ArrowDown"){ e.preventDefault(); renderDropdown(); }
+  else if(e.key==="Enter" && ddEl.style.display==="block"){ const first=ddEl.querySelector(".dd-item"); if(first) first.click(); }
+});
+
+function render(){ renderCats(); renderList(); renderDropdown(); }
+render();
+</script>
+</body>
+</html>
