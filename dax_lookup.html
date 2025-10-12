@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DAX 函數查詢系統 (內建)</title>
+  <style>
+    :root{
+      --bg1:#dbeffd;
+      --bg2:#f0f4f8;
+      --card:#ffffff;
+      --accent:#2b6cb0;
+      --muted:#556;
+    }
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans TC","Microsoft JhengHei",Arial;}
+    body{
+      background: linear-gradient(135deg,var(--bg1),var(--bg2));
+      display:flex;align-items:center;justify-content:center;
+      padding:24px;
+      box-sizing:border-box;
+      color:#0b2238;
+    }
+    .container{
+      width:100%;max-width:1100px;background:rgba(255,255,255,0.85);backdrop-filter:blur(6px);
+      border-radius:14px;box-shadow:0 10px 30px rgba(17,24,39,0.12);overflow:hidden;
+      display:grid;grid-template-columns:360px 1fr;gap:16px;padding:18px;
+    }
+    header{grid-column:1/3;display:flex;align-items:center;gap:12px;}
+    h1{margin:0;font-size:18px;color:var(--accent)}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+    .sidebar{padding:12px;background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.4));border-radius:10px;}
+    .search{display:flex;gap:8px;margin-bottom:10px}
+    input[type="search"]{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(10,40,80,0.06);font-size:14px}
+    button{padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+    button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(43,108,176,0.15)}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+    .list{max-height:62vh;overflow:auto;padding-right:6px}
+    .fn-item{padding:8px;border-radius:8px;margin-bottom:6px;background:linear-gradient(90deg,rgba(43,108,176,0.04),rgba(43,108,176,0.02));display:flex;justify-content:space-between;align-items:center}
+    .fn-item small{color:var(--muted)}
+    .main{padding:12px;background:linear-gradient(180deg,rgba(255,255,255,0.65),rgba(250,250,255,0.6));border-radius:10px;display:flex;flex-direction:column;gap:12px}
+    .detail{flex:1;overflow:auto;padding:12px;border-radius:8px;background:var(--card);box-shadow:inset 0 0 0 1px rgba(10,40,80,0.02)}
+    pre{white-space:pre-wrap;background:#f7fbff;padding:10px;border-radius:6px;border:1px solid rgba(10,40,80,0.03);overflow:auto}
+    .meta{display:flex;gap:12px;flex-wrap:wrap}
+    .badge{padding:6px 8px;border-radius:999px;background:rgba(43,108,176,0.08);color:var(--accent);font-weight:600;font-size:13px}
+    footer{display:flex;justify-content:space-between;gap:8px;align-items:center}
+    .small{font-size:12px;color:var(--muted)}
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.45);z-index:60;padding:20px}
+    .modal .card{width:100%;max-width:760px;background:#fff;padding:18px;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.25);max-height:85vh;overflow:auto}
+    .row{display:flex;gap:8px;align-items:center}
+    @media(max-width:880px){
+      .container{grid-template-columns:1fr;max-width:900px}
+      .sidebar{order:2}
+      .main{order:1}
+      header{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="application" aria-label="DAX 函數查詢系統">
+    <header>
+      <div>
+        <h1>DAX 函數查詢系統（內建）</h1>
+        <p class="lead">內建常用 DAX 函數與說明，支援搜尋、隨機抽查與詳情彈窗。可在電腦或手機上使用，並可下載本 HTML 檔。</p>
+      </div>
+      <div style="margin-left:auto" class="small">版本: 1.0 · 內建函數集</div>
+    </header>
+
+    <aside class="sidebar" aria-label="左側控制區">
+      <div class="search">
+        <input id="q" type="search" placeholder="搜尋函數或關鍵字 (例如 SUM、時間)...">
+        <button id="searchBtn">搜尋</button>
+      </div>
+
+      <div class="controls">
+        <button id="randomBtn">隨機抽查</button>
+        <button id="pauseBtn" class="ghost" disabled>暫停</button>
+        <button id="showIntro" class="ghost">查看說明</button>
+        <button id="downloadBtn" class="ghost">下載 HTML</button>
+      </div>
+
+      <div style="margin-bottom:8px" class="small">搜尋結果 (<span id="count">0</span>)</div>
+      <div class="list" id="results" role="list"></div>
+    </aside>
+
+    <main class="main" aria-live="polite">
+      <div class="meta">
+        <div class="badge" id="currentName">尚未選擇</div>
+        <div class="small" id="currentCategory">分類: -</div>
+        <div style="margin-left:auto" class="small">可在上方搜尋或左側點選函數</div>
+      </div>
+
+      <div class="detail" id="detailArea">
+        <h3 id="title">函數詳情</h3>
+        <div id="description"><p class="small">請選擇左側的函數，或使用隨機抽查。</p></div>
+        <h4>語法</h4>
+        <pre id="syntax">-</pre>
+        <h4>使用場景 & 範例</h4>
+        <div id="usage"><p class="small">範例與常見用法會顯示在這裡。</p></div>
+      </div>
+
+      <footer>
+        <div class="small">資料來源: 內建常用 DAX 函數說明（示範用）</div>
+        <div>
+          <button id="showAll" class="ghost">顯示全部函數</button>
+          <button id="clearBtn" class="ghost">清除搜尋</button>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Modal for detailed info -->
+  <div class="modal" id="modal">
+    <div class="card" role="dialog" aria-modal="true">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="m-title">函數</h3>
+        <div><button id="m-close" class="ghost">關閉</button></div>
+      </div>
+      <div id="m-body" style="margin-top:8px"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+        <button id="m-copy" class="ghost">複製語法</button>
+        <button id="m-download" class="ghost">匯出 JSON（此函數）</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* === 內建 DAX 函數資料 (片段化整理) ===
+   此處為示範完整內建常用函數與簡短說明。若需更完整條目可再擴充。 */
+
+const FUNCTIONS = [
+  {"name":"SUM","category":"聚合","syntax":"SUM(<column>)","desc":"對指定欄位求和（只接受數值欄位）。常用於簡單加總。","usage":"SUM(Sales[Amount])"},
+  {"name":"SUMX","category":"迭代與計算","syntax":"SUMX(<table>, <expression>)","desc":"針對 table 的每一列計算 expression 後再求和。適用於需逐列計算再總合的情境。","usage":"SUMX(Sales, Sales[Qty]*Sales[UnitPrice])"},
+  {"name":"AVERAGE","category":"聚合","syntax":"AVERAGE(<column>)","desc":"計算指定欄位的平均值。","usage":"AVERAGE(Products[Weight])"},
+  {"name":"AVERAGEX","category":"迭代與計算","syntax":"AVERAGEX(<table>, <expression>)","desc":"針對每列計算 expression，並對結果取平均。","usage":"AVERAGEX(Sales, Sales[Amount]/Sales[Qty])"},
+  {"name":"MIN","category":"聚合","syntax":"MIN(<column>)","desc":"回傳欄位中的最小值。","usage":"MIN(DateTable[Date])"},
+  {"name":"MAX","category":"聚合","syntax":"MAX(<column>)","desc":"回傳欄位中的最大值。","usage":"MAX(Sales[Amount])"},
+  {"name":"COUNT","category":"統計","syntax":"COUNT(<column>)","desc":"計算欄位中非空白的數值列數。","usage":"COUNT(Sales[OrderID])"},
+  {"name":"COUNTA","category":"統計","syntax":"COUNTA(<column>)","desc":"計算欄位中非空白的列數（不僅限數值）。","usage":"COUNTA(Products[Name])"},
+  {"name":"COUNTROWS","category":"統計","syntax":"COUNTROWS(<table>)","desc":"計算表格的列數。","usage":"COUNTROWS(FILTER(Sales,Sales[Amount]>0))"},
+  {"name":"DISTINCTCOUNT","category":"統計","syntax":"DISTINCTCOUNT(<column>)","desc":"計算欄位中不重複值的數量。","usage":"DISTINCTCOUNT(Sales[CustomerID])"},
+  {"name":"CALCULATE","category":"轉換/篩選","syntax":"CALCULATE(<expression>, <filter1>, <filter2>, ...)","desc":"最核心的評估函數，改變運算上下文並計算 expression。支援多個過濾器。","usage":"CALCULATE([TotalSales], Year[Year]=2024)"},
+  {"name":"FILTER","category":"篩選/表格","syntax":"FILTER(<table>, <expression>)","desc":"回傳符合 expression 的 table 子集。常與 CALCULATE 或 X 族函數搭配使用。","usage":"FILTER(Products, Products[Price]>100)"},
+  {"name":"ALL","category":"篩選/表格","syntax":"ALL(<table_or_column>)","desc":"移除指定欄位或表格的過濾，用於計算不受目前篩選影響的值（如總計）。","usage":"CALCULATE([TotalSales], ALL(Products))"},
+  {"name":"ALLEXCEPT","category":"篩選/表格","syntax":"ALLEXCEPT(<table>, <column1>, <column2>, ...)","desc":"移除除了指定欄位以外的所有篩選。用於分母/分群計算。","usage":"CALCULATE([TotalSales], ALLEXCEPT(Sales, Sales[Region]))"},
+  {"name":"ALLSELECTED","category":"篩選/表格","syntax":"ALLSELECTED(<table_or_column>)","desc":"回傳在使用者互動下（例如 slicer）還保留的範圍，用於動態百分比與視覺化交互。","usage":"CALCULATE([TotalSales], ALLSELECTED(Products[Category]))"},
+  {"name":"RELATED","category":"關聯","syntax":"RELATED(<column>)","desc":"從關聯表中取得對應欄位的值（單值）。需建立關聯。","usage":"RELATED(Product[Category])"},
+  {"name":"RELATEDTABLE","category":"關聯","syntax":"RELATEDTABLE(<table>)","desc":"回傳與目前表格在關聯下的所有列。通常在計算子表聚合時使用。","usage":"COUNTROWS(RELATEDTABLE(Sales))"},
+  {"name":"EARLIER","category":"表達式/迭代","syntax":"EARLIER(<column>[, <n>])","desc":"在多層迭代（例如 ADDCOLUMNS、SUMX 的內部）中，取得上層列的值。用於列級別累計或參考上一層變數。","usage":"..."},
+  {"name":"VALUES","category":"表格","syntax":"VALUES(<column_or_table>)","desc":"回傳欄位或表中目前上下文的唯一值集合。與 DISTINCT 類似。","usage":"VALUES(Customer[Country])"},
+  {"name":"DISTINCT","category":"表格","syntax":"DISTINCT(<column_or_table>)","desc":"取得唯一值集合（去重）。","usage":"DISTINCT(Products[Category])"},
+  {"name":"SELECTCOLUMNS","category":"表格","syntax":"SELECTCOLUMNS(<table>, \"NewName\", <expression>, ... )","desc":"建立新表並選擇與重新命名欄位，常用於結果整形。","usage":"SELECTCOLUMNS(Products,\"Cat\",Products[Category])"},
+  {"name":"ADDCOLUMNS","category":"表格","syntax":"ADDCOLUMNS(<table>, \"NewCol\", <expression>, ... )","desc":"針對 table 的每列新增計算欄位並回傳新表。","usage":"ADDCOLUMNS(Products,\"PriceWithTax\",Products[Price]*1.1)"},
+  {"name":"SUMMARIZE","category":"表格","syntax":"SUMMARIZE(<table>, <groupBy_column1>, <groupBy_column2>, [<name>, <expression>]... )","desc":"類似 SQL 的 GROUP BY，可用於製作彙總表。","usage":"SUMMARIZE(Sales,Products[Category],\"TotalSales\",SUM(Sales[Amount]))"},
+  {"name":"SUMMARIZECOLUMNS","category":"表格","syntax":"SUMMARIZECOLUMNS(<groupByColumnName> , <filterTable> , ... )","desc":"效能較佳的彙總函數，且與 CALCULATE 的過濾行為更一致。","usage":"SUMMARIZECOLUMNS(Products[Category], Sales[Year],\"Total\",SUM(Sales[Amount]))"},
+  {"name":"GROUPBY","category":"表格","syntax":"GROUPBY(<table>, <groupByColumn>, <name>, <expression>)","desc":"進階分組，允許逐群計算；使用時需注意行為與 SUMMARIZE 差異。","usage":"GROUPBY(Sales,Sales[ProductID],\"Qty\",SUMX(CURRENTGROUP(),Sales[Qty]))"},
+  {"name":"NATURALINNERJOIN","category":"表格","syntax":"NATURALINNERJOIN(<table1>, <table2>)","desc":"基於同名欄位做自然內連接，回傳符合的列。" ,"usage":""},
+  {"name":"UNION","category":"表格","syntax":"UNION(<table1>, <table2>, ... )","desc":"合併多個表的列（同欄位結構）。","usage":"UNION(TableA, TableB)"},
+  {"name":"INTERSECT","category":"表格","syntax":"INTERSECT(<table1>, <table2>)","desc":"回傳兩表共同的列。","usage":"INTERSECT(A,B)"},
+  {"name":"EXCEPT","category":"表格","syntax":"EXCEPT(<table1>, <table2>)","desc":"從 table1 中移除出現在 table2 的列。","usage":"EXCEPT(AllProducts, DiscountedProducts)"},
+  {"name":"LOOKUPVALUE","category":"查找","syntax":"LOOKUPVALUE(<result_column>, <search_column1>, <search_value1> [, <search_column2>, <search_value2>]... )","desc":"類似 Excel 的 VLOOKUP，但可指定多個搜尋條件。","usage":"LOOKUPVALUE(Product[Name], Product[ID], Sales[ProductID])"},
+  {"name":"SWITCH","category":"邏輯","syntax":"SWITCH(<expression>, <value1>, <result1>, <value2>, <result2>, ..., [else])","desc":"多條件分支，比巢狀 IF 更清晰。","usage":"SWITCH(TRUE(),[Score]>=90,\"A\",[Score]>=80,\"B\",\"C\")"},
+  {"name":"IF","category":"邏輯","syntax":"IF(<condition>, <then>, [else])","desc":"基本條件判斷。","usage":"IF([Profit]>0,\"Profit\",\"Loss\")"},
+  {"name":"COALESCE","category":"邏輯","syntax":"COALESCE(<value1>, <value2>, ... )","desc":"回傳第一個非空白的值，常用於替代 ISBLANK 的組合。","usage":"COALESCE([Measure],0)"},
+  {"name":"ISBLANK","category":"資訊","syntax":"ISBLANK(<value>)","desc":"判斷值是否為空白。","usage":"IF(ISBLANK([Sales]),0,[Sales])"},
+  {"name":"CONCATENATEX","category":"文字","syntax":"CONCATENATEX(<table>, <expression>, [delimiter], [orderBy_expression], [order])","desc":"將 table 中表達式的值串接為字串，常用於產生說明性文字。","usage":"CONCATENATEX(Products,Products[Name],\", \")"},
+  {"name":"FORMAT","category":"文字","syntax":"FORMAT(<value>, <format_string>)","desc":"依格式字串將值轉為文字（會變成文字型態）。","usage":"FORMAT([Amount],\"#,0\")"},
+  {"name":"VALUE","category":"轉換","syntax":"VALUE(<text>)","desc":"將文字轉為數值（如果可能）。","usage":"VALUE(\"123\")"},
+  {"name":"RANKX","category":"排名","syntax":"RANKX(<table>, <expression>, [value], [order], [ties])","desc":"對 table 中依 expression 排名，回傳排名值。","usage":"RANKX(ALL(Products),[Sales])"},
+  {"name":"TOPN","category":"過濾/排序","syntax":"TOPN(<n>, <table>, <orderBy_expression>, [order])","desc":"回傳前 n 筆依排序條件的列。","usage":"TOPN(5,Products,[Sales],DESC)"},
+  {"name":"EARLIEST","category":"—","syntax":"(同 EARLIER)","desc":"部分環境中可能看見 EARLIEST，實務以 EARLIER 為主。","usage":""},
+  {"name":"TOTALYTD","category":"時間智慧","syntax":"TOTALYTD(<expression>, <dates>, [year_end_date])","desc":"返回年累計值（從年初到當前日期）。","usage":"TOTALYTD([Sales], Dates[Date])"},
+  {"name":"DATESYTD","category":"時間智慧","syntax":"DATESYTD(<dates>, [year_end_date])","desc":"回傳從年初到目前可見日期的日期集合，可與 CALCULATE 搭配。","usage":"CALCULATE([Sales], DATESYTD(Dates[Date]))"},
+  {"name":"SAMEPERIODLASTYEAR","category":"時間智慧","syntax":"SAMEPERIODLASTYEAR(<dates>)","desc":"取得與當前範圍相同的去年期間。","usage":"CALCULATE([Sales], SAMEPERIODLASTYEAR(Dates[Date]))"},
+  {"name":"PARALLELPERIOD","category":"時間智慧","syntax":"PARALLELPERIOD(<dates>, <number_of_intervals>, <interval>)","desc":"取得前/後幾個期間（年/月/季），常用於比較。","usage":"PARALLELPERIOD(Dates[Date], -1, YEAR)"},
+  {"name":"DATEADD","category":"時間智慧","syntax":"DATEADD(<dates>, <number_of_intervals>, <interval>)","desc":"將日期集合平移指定間隔。","usage":"DATEADD(Dates[Date], -1, YEAR)"},
+  {"name":"DATESBETWEEN","category":"時間智慧","syntax":"DATESBETWEEN(<dates>, <start_date>, <end_date>)","desc":"回傳介於 start 與 end 的日期集合。","usage":"DATESBETWEEN(Dates[Date], DATE(2024,1,1), DATE(2024,3,31))"},
+  {"name":"FIRSTDATE","category":"時間","syntax":"FIRSTDATE(<dates>)","desc":"回傳集合中的第一個日期。","usage":"FIRSTDATE(Dates[Date])"},
+  {"name":"LASTDATE","category":"時間","syntax":"LASTDATE(<dates>)","desc":"回傳集合中的最後一個日期。","usage":"LASTDATE(Dates[Date])"},
+  {"name":"YEAR","category":"日期與時間","syntax":"YEAR(<date>)","desc":"回傳年份整數。","usage":"YEAR(Today())"},
+  {"name":"MONTH","category":"日期與時間","syntax":"MONTH(<date>)","desc":"回傳月份（1-12）。","usage":"MONTH(Today())"},
+  {"name":"DAY","category":"日期與時間","syntax":"DAY(<date>)","desc":"回傳日期中的日（1-31）。","usage":"DAY(Today())"},
+  {"name":"TODAY","category":"日期與時間","syntax":"TODAY()","desc":"回傳當前日期（不含時間）。","usage":"TODAY()"},
+  {"name":"NOW","category":"日期與時間","syntax":"NOW()","desc":"回傳目前的日期與時間（包含時間）。","usage":"NOW()"},
+  {"name":"FORMAT","category":"文字","syntax":"FORMAT(value, format_string)","desc":"格式化輸出，注意會回傳文字。","usage":"FORMAT([Date],\"yyyy-MM-dd\")"},
+  {"name":"ISERROR","category":"資訊","syntax":"ISERROR(<value>)","desc":"判斷是否為錯誤。","usage":"ISERROR([Value])"},
+  {"name":"ISNUMBER","category":"資訊","syntax":"ISNUMBER(<value>)","desc":"判斷值是否為數字。","usage":"ISNUMBER(VALUE([Text]))"},
+  {"name":"ISTEXT","category":"資訊","syntax":"ISTEXT(<value>)","desc":"判斷是否為文字。","usage":"ISTEXT([SomeCol])"},
+  {"name":"BLANK","category":"資訊","syntax":"BLANK()","desc":"回傳空白值（DAX 中空白相當於 NULL）。","usage":"BLANK()"},
+  {"name":"DIVIDE","category":"數學","syntax":"DIVIDE(<numerator>, <denominator>, [alternateResult])","desc":"安全除法，避免除以 0 的錯誤。","usage":"DIVIDE([Total], [Qty], 0)"},
+  {"name":"ROUND","category":"數學","syntax":"ROUND(<number>, <num_digits>)","desc":"四捨五入到指定小數位。","usage":"ROUND([Amount],2)"},
+  {"name":"INT","category":"數學","syntax":"INT(<number>)","desc":"取整數（向下）。","usage":"INT([Amount])"},
+  {"name":"ABS","category":"數學","syntax":"ABS(<number>)","desc":"取絕對值。","usage":"ABS([Change])"},
+  {"name":"POWER","category":"數學","syntax":"POWER(<number>, <power>)","desc":"次方運算。","usage":"POWER([Value],2)"},
+  {"name":"SQRT","category":"數學","syntax":"SQRT(<number>)","desc":"平方根。","usage":"SQRT([Value])"},
+  {"name":"LOG","category":"數學","syntax":"LOG(<number>, [base])","desc":"對數運算。","usage":"LOG([Value],10)"},
+  {"name":"DIVIDE","category":"數學","syntax":"see above","desc":"(重覆項目)","usage":""},
+  {"name":"PATH","category":"階層/路徑","syntax":"PATH(<parent_column>, <child_column>, <start_value>)","desc":"建立 parent-child 階層路徑（用於組織結構等）。","usage":"PATH(Employee[ParentID], Employee[EmployeeID], Employee[EmployeeID])"},
+  {"name":"PATHITEM","category":"階層/路徑","syntax":"PATHITEM(<path>, <position>, [type])","desc":"從 PATH 回傳指定位置的節點。","usage":""},
+  {"name":"PATHLENGTH","category":"階層/路徑","syntax":"PATHLENGTH(<path>)","desc":"回傳 PATH 的長度（節點數）。","usage":""},
+  {"name":"USERELATIONSHIP","category":"關聯/過濾","syntax":"USERELATIONSHIP(<column1>, <column2>)","desc":"在 CALCULATE 中啟用非預設的關聯（啟用 inactive relationship）。","usage":"CALCULATE([Sales], USERELATIONSHIP(Date[Date], Orders[OrderDate]))"},
+  {"name":"CROSSFILTER","category":"關聯/過濾","syntax":"CROSSFILTER(<column1>, <column2>, <direction>)","desc":"變更兩表關聯的過濾方向（如雙向、單向）。","usage":""},
+  {"name":"TREATAS","category":"轉換/過濾","syntax":"TREATAS(<table>, <columns...>)","desc":"將一個表的欄位值當成過濾器套用到另一表。常用於複雜分組。","usage":""},
+  {"name":"LOOKUPVALUE","category":"查找","syntax":"see above","desc":"(重覆項目)","usage":""},
+  {"name":"EARLIER","category":"迭代","syntax":"see above","desc":"(重覆項目)","usage":""},
+  {"name":"CALENDARAUTO","category":"日期","syntax":"CALENDARAUTO([fiscal_year_end_month])","desc":"自動根據模型的資料範圍建立日期表。","usage":"CALENDARAUTO()"},
+  {"name":"CALENDAR","category":"日期","syntax":"CALENDAR(<start_date>, <end_date>)","desc":"建立一個完整的日期表，包含從 start 到 end 的每一天。","usage":"CALENDAR(DATE(2020,1,1),DATE(2025,12,31))"},
+  {"name":"FORMAT","category":"文字","syntax":"(再次提醒)","desc":"(已說明)","usage":""},
+  {"name":"CONTAINS","category":"邏輯/篩選","syntax":"CONTAINS(<table>, <column>, <value> [, <column2>, <value2>]... )","desc":"檢查 table 中是否存在符合條件的列（布林）。","usage":"CONTAINS(Products, Products[ID], 123)"},
+  {"name":"ISINSCOPE","category":"資訊/上下文","syntax":"ISINSCOPE(<column>)","desc":"判斷欄位是否在目前的視覺化分群上下文中（常用在動態顯示）。","usage":"IF(ISINSCOPE(Product[Category]), ... , ...)"},
+  {"name":"SELECTEDVALUE","category":"資訊/上下文","syntax":"SELECTEDVALUE(<column>, [alternateResult])","desc":"在單一值選擇時回傳該值，否則回傳 alternate 或 BLANK。常見於動態標題。","usage":"SELECTEDVALUE(Products[Category],\"全部\")"},
+  {"name":"HASONEVALUE","category":"資訊/上下文","syntax":"HASONEVALUE(<column>)","desc":"判斷 column 在目前上下文是否只有一個值。","usage":"IF(HASONEVALUE(Customer[ID]), VALUES(Customer[Name]), \"多個\")"},
+  {"name":"ISFILTERED","category":"資訊/上下文","syntax":"ISFILTERED(<column_or_table>)","desc":"判斷欄位或表格是否被篩選。","usage":"ISFILTERED(Products[Category])"},
+  {"name":"ALLNOBLANKROW","category":"篩選","syntax":"ALLNOBLANKROW(<table_or_column>)","desc":"類似 ALL，但會移除空白列。","usage":""},
+  {"name":"LOOKUPVALUE","category":"查找","syntax":"(再次提醒)","desc":"(已說明)","usage":""},
+  {"name":"HOUR","category":"日期與時間","syntax":"HOUR(<time>)","desc":"取得小時。","usage":"HOUR(NOW())"},
+  {"name":"MINUTE","category":"日期與時間","syntax":"MINUTE(<time>)","desc":"取得分鐘。","usage":"MINUTE(NOW())"},
+  {"name":"SECOND","category":"日期與時間","syntax":"SECOND(<time>)","desc":"取得秒。","usage":"SECOND(NOW())"},
+  {"name":"EARLIER","category":"迭代","syntax":"(再提)","desc":"請以 EARLIER 作為參考。","usage":""},
+  {"name":"ISOWEEKNUM","category":"日期","syntax":"ISOWEEKNUM(<date>)","desc":"回傳 ISO 週數。","usage":"ISOWEEKNUM(TODAY())"},
+  {"name":"RELATEDTABLE","category":"關聯","syntax":"(已列出)","desc":"(已說明)","usage":""},
+  {"name":"USERNAME","category":"使用者相關","syntax":"USERNAME()","desc":"回傳目前授權使用者名稱。注意在 Power BI Service 與 Desktop 的值會有所差異。","usage":""},
+  {"name":"ISMEMBEROF","category":"安全","syntax":"ISMEMBEROF(<groupName>)","desc":"檢查當前使用者是否屬於指定 AD 群組（視環境而定）。","usage":""},
+  {"name":"FORMAT","category":"文字","syntax":"(多次出現)","desc":"提醒：FORMAT 會將值轉成文字，會影響排序與比較。","usage":""},
+  {"name":"CONCATENATE","category":"文字","syntax":"CONCATENATE(<text1>, <text2>)","desc":"將兩個字串連接（現多使用 & 或 CONCATENATEX）。","usage":"CONCATENATE(Name, \" \", Surname)"},
+  {"name":"LEFT","category":"文字","syntax":"LEFT(<text>, <num_chars>)","desc":"取得字串左側字元。","usage":"LEFT([Code],3)"},
+  {"name":"RIGHT","category":"文字","syntax":"RIGHT(<text>, <num_chars>)","desc":"取得字串右側字元。","usage":"RIGHT([Code],2)"},
+  {"name":"MID","category":"文字","syntax":"MID(<text>, <start>, <num_chars>)","desc":"從中間擷取字串片段。","usage":"MID([Code],2,3)"},
+  {"name":"SEARCH","category":"文字","syntax":"SEARCH(<find_text>, <within_text>, [start])","desc":"搜尋字串位置（不區分大小寫）。","usage":"SEARCH(\"abc\", [Column])"},
+  {"name":"FIND","category":"文字","syntax":"FIND(<find_text>, <within_text>, [start])","desc":"搜尋字串位置（區分大小寫）。","usage":"FIND(\"A\",[Col])"},
+  {"name":"SUBSTITUTE","category":"文字","syntax":"SUBSTITUTE(<text>, <old_text>, <new_text>, [instance_num])","desc":"替換字串。","usage":"SUBSTITUTE([Notes],\"-\",\"/\")"},
+  {"name":"REPLACE","category":"文字","syntax":"REPLACE(<old_text>, <start_num>, <num_chars>, <new_text>)","desc":"以新字串替換舊字串中的部分位置。","usage":""},
+  {"name":"FORMAT","category":"注意","syntax":"(請見多處)","desc":"重複提示：Format 會把數值轉為文字，留意排序、比較與效能。","usage":""}
+];
+
+/* === UI 行為與搜尋邏輯 === */
+
+const resultsDiv = document.getElementById('results');
+const qInput = document.getElementById('q');
+const searchBtn = document.getElementById('searchBtn');
+const countSpan = document.getElementById('count');
+const currentName = document.getElementById('currentName');
+const currentCategory = document.getElementById('currentCategory');
+const title = document.getElementById('title');
+const description = document.getElementById('description');
+const syntax = document.getElementById('syntax');
+const usage = document.getElementById('usage');
+const randomBtn = document.getElementById('randomBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const showIntro = document.getElementById('showIntro');
+const modal = document.getElementById('modal');
+const mtitle = document.getElementById('m-title');
+const mbody = document.getElementById('m-body');
+const mclose = document.getElementById('m-close');
+const mcopy = document.getElementById('m-copy');
+const mdownload = document.getElementById('m-download');
+const downloadBtn = document.getElementById('downloadBtn');
+const showAllBtn = document.getElementById('showAll');
+const clearBtn = document.getElementById('clearBtn');
+
+let timer = null;
+let currentIndex = -1;
+let filtered = FUNCTIONS.slice();
+
+function renderList(arr){
+  resultsDiv.innerHTML = '';
+  arr.forEach((f,i)=>{
+    const el = document.createElement('div');
+    el.className = 'fn-item';
+    el.setAttribute('role','listitem');
+    el.innerHTML = `<div>
+      <div style="font-weight:700">${f.name}</div>
+      <small>${f.category} — ${f.desc.substring(0,80)}${f.desc.length>80?'...':''}</small>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="ghost" data-index="${i}" onclick="viewDetail(event)">查看</button>
+    </div>`;
+    resultsDiv.appendChild(el);
+  });
+  countSpan.textContent = arr.length;
+}
+
+function viewDetail(e){
+  const idx = Number(e.currentTarget.getAttribute('data-index'));
+  const f = filtered[idx];
+  showDetailInPanel(f);
+  // open modal as well
+  openModal(f);
+}
+
+function showDetailInPanel(f){
+  currentName.textContent = f.name;
+  currentCategory.textContent = '分類: ' + (f.category || '-');
+  title.textContent = f.name;
+  description.innerHTML = `<p>${f.desc}</p>`;
+  syntax.textContent = f.syntax || '-';
+  usage.innerHTML = `<pre>${f.usage || '-'}</pre>`;
+}
+
+function openModal(f){
+  mtitle.textContent = f.name;
+  mbody.innerHTML = `<h4>分類：${f.category||'-'}</h4>
+    <p>${f.desc||''}</p>
+    <h5>語法</h5><pre>${f.syntax||''}</pre>
+    <h5>範例</h5><pre>${f.usage||''}</pre>`;
+  modal.style.display = 'flex';
+}
+
+mclose.addEventListener('click', ()=> modal.style.display='none');
+modal.addEventListener('click',(ev)=>{ if(ev.target===modal) modal.style.display='none' });
+
+mcopy.addEventListener('click', ()=>{
+  const text = mbody.innerText || '';
+  navigator.clipboard?.writeText(text).then(()=>{ alert('已複製語法與說明到剪貼簿') }, ()=>{ alert('複製失敗') });
+});
+
+mdownload.addEventListener('click', ()=>{
+  const name = mtitle.textContent || 'function';
+  const obj = filtered.find(f=>f.name===name);
+  const blob = new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name + '.json'; a.click();
+  URL.revokeObjectURL(url);
+});
+
+/* 搜尋 */
+function doSearch(){
+  const q = (qInput.value||'').trim().toLowerCase();
+  if(!q){
+    filtered = FUNCTIONS.slice();
+  } else {
+    filtered = FUNCTIONS.filter(f=>{
+      return f.name.toLowerCase().includes(q) || (f.desc||'').toLowerCase().includes(q) || (f.usage||'').toLowerCase().includes(q) || (f.category||'').toLowerCase().includes(q);
+    });
+  }
+  renderList(filtered);
+  // reset panel
+  if(filtered.length>0){
+    currentIndex = 0;
+    showDetailInPanel(filtered[0]);
+  } else {
+    currentIndex = -1;
+    currentName.textContent = '尚未選擇';
+    currentCategory.textContent = '分類: -';
+    title.textContent = '函數詳情';
+    description.innerHTML = '<p class="small">找不到符合的函數。</p>';
+    syntax.textContent = '-';
+    usage.innerHTML = '<p class="small">-</p>';
+  }
+}
+
+searchBtn.addEventListener('click', doSearch);
+qInput.addEventListener('keyup',(e)=>{ if(e.key==='Enter') doSearch(); });
+
+/* 隨機抽查 */
+function startRandom(){
+  if(timer) return;
+  if(filtered.length===0) return;
+  randomBtn.textContent = '抽查中...';
+  pauseBtn.disabled = false;
+  timer = setInterval(()=>{
+    currentIndex = (currentIndex + 1) % filtered.length;
+    const f = filtered[currentIndex];
+    currentName.textContent = f.name;
+    currentCategory.textContent = '分類: ' + (f.category || '-');
+    title.textContent = f.name;
+    description.innerHTML = `<p>${f.desc}</p>`;
+    syntax.textContent = f.syntax || '-';
+    usage.innerHTML = `<pre>${f.usage || '-'}</pre>`;
+  }, 600); // 每 600ms 換一個
+}
+
+function stopRandom(){
+  if(timer){ clearInterval(timer); timer=null; randomBtn.textContent='隨機抽查'; pauseBtn.disabled=true; }
+}
+
+randomBtn.addEventListener('click', startRandom);
+pauseBtn.addEventListener('click', stopRandom);
+
+showIntro.addEventListener('click', ()=>{
+  const name = currentName.textContent;
+  const f = FUNCTIONS.find(x=>x.name===name) || filtered[0];
+  if(f) openModal(f);
+});
+
+downloadBtn.addEventListener('click', ()=>{
+  // 下載當前完整 HTML（self）: 由瀏覽器提供的 documentElement 轉換
+  const html = '<!doctype html>\\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html],{type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'dax_lookup.html'; a.click();
+  URL.revokeObjectURL(url);
+});
+
+showAllBtn.addEventListener('click', ()=>{
+  qInput.value=''; doSearch();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+clearBtn.addEventListener('click', ()=>{
+  qInput.value=''; doSearch();
+});
+
+/* 初始渲染 */
+doSearch();
+
+/* 方便外部呼叫 viewDetail */
+window.viewDetail = viewDetail;
+</script>
+</body>
+</html>
