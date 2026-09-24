@@ -2,510 +2,704 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>每日 AI 資訊 — 2026年9月23日</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>每日 AI 資訊 — 2026年9月24日</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --cork:#c8a96e;
-    --ink:#3a2f22;
-    --ink-soft:#5b4a36;
-    --yellow:#fff6c4;
-    --blue:#cfe8f5;
-    --green:#dbf0d2;
-    --pink:#fbd9e6;
-    --orange:#ffe0bb;
-    --lavender:#e5dbf8;
-    --mint:#d2f3ea;
-    --tape:rgba(255,241,150,0.65);
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-    color:var(--ink);
-    background-color:var(--cork);
-    background-image:
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 42px),
-      repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 42px),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-attachment:fixed;
-    padding:0 0 60px;
-    line-height:1.6;
-  }
-  a{color:inherit;text-decoration:none;}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
+:root{
+  --board:#c8a96e;
+  --ink:#2b2016;
+  --ink-soft:#55483a;
+  --ink-faint:#7a6a54;
 
-  header.masthead{
-    text-align:center;
-    padding:48px 20px 28px;
-  }
-  header.masthead h1{
-    font-size:2.6rem;
-    margin:0 0 6px;
-    letter-spacing:2px;
-    text-shadow:2px 2px 0 rgba(255,255,255,0.25), 0 3px 8px rgba(0,0,0,0.2);
-  }
-  header.masthead .sub{
-    display:inline-block;
-    background:var(--yellow);
-    padding:8px 22px;
-    border-radius:3px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.25);
-    transform:rotate(-1.2deg);
-    font-size:1rem;
-    color:var(--ink-soft);
-  }
+  --yellow:#fdf0a8;      --yellow-line:#e9d97e;
+  --blue:#c9e6f5;        --blue-line:#a9cfe3;
+  --green:#d7f0d0;       --green-line:#b7dcae;
+  --pink:#f7d9e3;        --pink-line:#e6b9c9;
+  --orange:#fbdfc0;      --orange-line:#edbd8c;
+  --lavender:#e3d9f5;    --lavender-line:#c8b6e8;
+  --mint:#cdf0e3;        --mint-line:#a7ddc7;
+  --gold:#ffe9a8;        --gold-line:#e3c261;
 
-  section{margin:36px 0;}
-  .section-title{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    font-size:1.5rem;
-    font-weight:700;
-    background:rgba(255,255,255,0.35);
-    padding:8px 20px;
-    border-radius:999px;
-    margin:0 0 22px;
-    box-shadow:0 3px 8px rgba(0,0,0,0.15);
-  }
-  .section-title .num{
-    display:inline-flex;align-items:center;justify-content:center;
-    width:28px;height:28px;border-radius:50%;
-    background:var(--ink);color:var(--yellow);
-    font-size:0.9rem;font-weight:700;
-  }
+  --tape:rgba(247,227,120,.6);
+  --shadow:rgba(40,28,12,.32);
+}
 
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:34px 26px;
-  }
-  .grid.cols-2{grid-template-columns:repeat(2,1fr);}
+*{box-sizing:border-box;}
 
-  .card{
-    position:relative;
-    display:block;
-    background-color:var(--yellow);
-    background-image:repeating-linear-gradient(transparent, transparent 26px, rgba(0,0,0,0.06) 27px);
-    padding:26px 20px 20px;
-    border-radius:2px;
-    box-shadow:0 8px 16px rgba(0,0,0,0.28), 0 2px 5px rgba(0,0,0,0.18);
-    transition:transform .18s ease, box-shadow .18s ease;
-    cursor:pointer;
-  }
-  .card::before{
-    content:"";
-    position:absolute;
-    top:-16px;left:50%;
-    width:96px;height:30px;
-    background:linear-gradient(120deg, var(--tape), rgba(255,241,150,0.35));
-    box-shadow:0 1px 3px rgba(0,0,0,0.25);
-    opacity:0.9;
-  }
-  .grid > .card:nth-child(6n+1){transform:rotate(-1.3deg);}
-  .grid > .card:nth-child(6n+1)::before{transform:translateX(-50%) rotate(-4deg);}
-  .grid > .card:nth-child(6n+2){transform:rotate(0.9deg);}
-  .grid > .card:nth-child(6n+2)::before{transform:translateX(-50%) rotate(3deg);}
-  .grid > .card:nth-child(6n+3){transform:rotate(-0.5deg);}
-  .grid > .card:nth-child(6n+3)::before{transform:translateX(-50%) rotate(-2deg);}
-  .grid > .card:nth-child(6n+4){transform:rotate(1.2deg);}
-  .grid > .card:nth-child(6n+4)::before{transform:translateX(-50%) rotate(5deg);}
-  .grid > .card:nth-child(6n+5){transform:rotate(-1.0deg);}
-  .grid > .card:nth-child(6n+5)::before{transform:translateX(-50%) rotate(-3deg);}
-  .grid > .card:nth-child(6n+6){transform:rotate(0.6deg);}
-  .grid > .card:nth-child(6n+6)::before{transform:translateX(-50%) rotate(2deg);}
-  .card:hover{transform:rotate(0deg) translateY(-6px) !important; box-shadow:0 16px 26px rgba(0,0,0,0.32), 0 4px 8px rgba(0,0,0,0.2);}
+body{
+  margin:0;
+  padding:0 16px;
+  padding-block:36px;
+  background-color:var(--board);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(-45deg, rgba(60,40,15,0.06) 0 2px, transparent 2px 7px),
+    radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.12), transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(0,0,0,0.10), transparent 55%);
+  font-family:'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  color:var(--ink);
+  color-scheme:light;
+}
 
-  .has-pin::after{
-    content:"";
-    position:absolute;
-    top:-11px; left:20px;
-    width:17px;height:17px;border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #fff, #e8443f 42%, #9c1a17 85%);
-    box-shadow:0 2px 4px rgba(0,0,0,0.45);
-    z-index:3;
-  }
+.wrap{max-width:1180px;margin:0 auto;}
 
-  .card .thumb{
-    width:100%;
-    aspect-ratio:16/9;
-    object-fit:cover;
-    border-radius:2px;
-    margin-bottom:12px;
-    border:1px solid rgba(0,0,0,0.12);
-    display:block;
-    background:rgba(0,0,0,0.05);
-  }
-  .card .rank{
-    position:absolute;
-    top:10px;right:14px;
-    font-size:2.2rem;
-    font-weight:800;
-    color:rgba(0,0,0,0.12);
-  }
-  .card h3{
-    font-size:1.12rem;
-    margin:0 0 10px;
-    line-height:1.4;
-  }
-  .card p{margin:0 0 10px;font-size:0.92rem;}
-  .card .label{
-    font-weight:700;
-    font-size:0.78rem;
-    color:var(--ink-soft);
-    display:block;
-    margin-bottom:2px;
-  }
-  .card .why{
-    background:rgba(255,255,255,0.4);
-    padding:10px 12px;
-    border-radius:4px;
-    border-left:3px solid rgba(0,0,0,0.25);
-  }
-  .card .meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px 14px;
-    font-size:0.78rem;
-    color:var(--ink-soft);
-    margin-top:14px;
-    padding-top:10px;
-    border-top:1px dashed rgba(0,0,0,0.25);
-  }
-  .card .readmore{
-    display:inline-block;
-    margin-top:14px;
-    font-weight:700;
-    font-size:0.85rem;
-    background:var(--ink);
-    color:var(--yellow);
-    padding:6px 16px;
-    border-radius:999px;
-  }
-  .card .secondhand{
-    display:inline-block;
-    font-size:0.7rem;
-    background:rgba(0,0,0,0.15);
-    padding:2px 8px;
-    border-radius:999px;
-    margin-left:6px;
-  }
+/* ---------- header ---------- */
+header.board-title{
+  position:relative;
+  max-width:640px;
+  margin:0 auto 46px;
+  background:var(--gold);
+  border:1px solid var(--gold-line);
+  border-radius:3px;
+  padding:30px 34px 26px;
+  text-align:center;
+  transform:rotate(-0.8deg);
+  box-shadow:0 10px 22px var(--shadow), inset 0 0 0 1px rgba(255,255,255,.3);
+}
+header.board-title::before{
+  content:"";
+  position:absolute; top:-16px; left:50%;
+  transform:translateX(-50%) rotate(-2.5deg);
+  width:150px; height:34px;
+  background:var(--tape);
+  box-shadow:0 2px 3px rgba(0,0,0,.18);
+}
+header.board-title::after{
+  content:"";
+  position:absolute; top:-11px; left:50%;
+  transform:translateX(-50%);
+  width:20px; height:20px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #fff8de, #e6b83e 45%, #8a5a2b 100%);
+  box-shadow:0 3px 5px rgba(0,0,0,.4);
+}
+.eyebrow{
+  font-family:'Kalam', cursive;
+  font-weight:700;
+  letter-spacing:.14em;
+  font-size:.82rem;
+  color:var(--ink-soft);
+  text-transform:uppercase;
+}
+h1.title{
+  margin:6px 0 10px;
+  font-size:clamp(2.1rem,6vw,2.9rem);
+  font-weight:900;
+  line-height:1.15;
+  text-wrap:balance;
+}
+.meta-line{
+  font-family:'Kalam', cursive;
+  font-weight:700;
+  font-size:1.05rem;
+  color:var(--ink-soft);
+}
+.meta-sub{font-size:.86rem;color:var(--ink-faint);margin-top:4px;}
 
-  .cat-blue{background-color:var(--blue);}
-  .cat-green{background-color:var(--green);}
-  .cat-pink{background-color:var(--pink);}
-  .cat-orange{background-color:var(--orange);}
-  .cat-lavender{background-color:var(--lavender);}
-  .cat-mint{background-color:var(--mint);}
+/* ---------- section labels ---------- */
+.section{margin:0 auto 14px;}
+.section-head{
+  display:inline-block;
+  background:var(--ink);
+  color:#fff9e8;
+  font-family:'Kalam', cursive;
+  font-weight:700;
+  font-size:1.28rem;
+  padding:9px 24px 10px;
+  border-radius:3px;
+  transform:rotate(-1deg);
+  box-shadow:3px 4px 0 rgba(0,0,0,.22);
+  margin:0 0 22px;
+}
+.section-head .zh{font-family:'Noto Sans TC',sans-serif;font-weight:900;margin-left:2px;}
+.section + .section{margin-top:52px;}
 
-  .spotlight{
-    position:relative;
-    max-width:820px;
-    margin:0 auto;
-    background-color:var(--pink);
-    background-image:repeating-linear-gradient(transparent, transparent 26px, rgba(0,0,0,0.06) 27px);
-    padding:34px 30px 28px;
-    border-radius:2px;
-    box-shadow:0 12px 26px rgba(0,0,0,0.32);
-    transform:rotate(-0.6deg);
-  }
-  .spotlight::before{
-    content:"";
-    position:absolute;top:-16px;left:50%;
-    width:120px;height:34px;
-    background:linear-gradient(120deg, var(--tape), rgba(255,241,150,0.35));
-    box-shadow:0 1px 3px rgba(0,0,0,0.25);
-    transform:translateX(-50%) rotate(-3deg);
-  }
-  .spotlight h3{font-size:1.4rem;margin:6px 0 14px;}
-  .spotlight img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:3px;margin-bottom:14px;border:1px solid rgba(0,0,0,0.15);}
-  .spotlight p{margin:0 0 12px;font-size:0.98rem;}
+/* ---------- grid ---------- */
+.notes-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:44px 26px;
+  padding:6px 2px 6px;
+}
+@media (max-width:920px){.notes-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:640px){.notes-grid{grid-template-columns:1fr;}}
 
-  footer{
-    text-align:center;
-    margin-top:50px;
-    font-size:0.8rem;
-    color:rgba(58,47,34,0.75);
-  }
+.notes-grid.top5{grid-template-columns:repeat(3,1fr);}
+@media (max-width:920px){.notes-grid.top5{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:640px){.notes-grid.top5{grid-template-columns:1fr;}}
 
-  @media (max-width:760px){
-    .grid, .grid.cols-2{grid-template-columns:1fr;}
-    header.masthead h1{font-size:1.9rem;}
-    .wrap{padding:0 16px;}
-  }
+/* rotation rhythm */
+.note:nth-child(7n+1){--rot:-1.3deg;}
+.note:nth-child(7n+2){--rot:0.9deg;}
+.note:nth-child(7n+3){--rot:-0.5deg;}
+.note:nth-child(7n+4){--rot:1.2deg;}
+.note:nth-child(7n+5){--rot:-0.9deg;}
+.note:nth-child(7n+6){--rot:0.5deg;}
+.note:nth-child(7n)  {--rot:-0.2deg;}
+
+.note:nth-child(3n) .tape{transform:translateX(-50%) rotate(4deg);}
+.note:nth-child(4n) .tape{transform:translateX(-50%) rotate(-5deg);}
+.note:nth-child(5n) .tape{transform:translateX(-50%) rotate(2deg);}
+
+/* ---------- note card ---------- */
+.note{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  text-decoration:none;
+  color:var(--ink);
+  border-radius:2px;
+  padding:20px 18px 18px;
+  transform:rotate(var(--rot));
+  box-shadow:0 8px 16px var(--shadow), inset 0 0 0 1px rgba(255,255,255,.35);
+  transition:transform .18s ease, box-shadow .18s ease;
+  outline:none;
+}
+.note:hover, .note:focus-visible{
+  transform:rotate(0deg) translateY(-6px);
+  box-shadow:0 18px 30px var(--shadow), inset 0 0 0 1px rgba(255,255,255,.4);
+  z-index:4;
+}
+.note .tape{
+  content:"";
+  position:absolute; top:-14px; left:50%;
+  transform:translateX(-50%) rotate(-3deg);
+  width:104px; height:26px;
+  background:var(--tape);
+  box-shadow:0 1px 2px rgba(0,0,0,.16);
+}
+.note.has-pin .pin{
+  content:"";
+  position:absolute; top:-11px; left:50%;
+  transform:translateX(-50%);
+  width:19px; height:19px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #fff8de, #e6b83e 45%, #8a5a2b 100%);
+  box-shadow:0 3px 5px rgba(0,0,0,.4);
+  z-index:2;
+}
+
+.cat-model{background:var(--blue);border:1px solid var(--blue-line);}
+.cat-product{background:var(--green);border:1px solid var(--green-line);}
+.cat-agent{background:var(--pink);border:1px solid var(--pink-line);}
+.cat-oss{background:var(--orange);border:1px solid var(--orange-line);}
+.cat-paper{background:var(--lavender);border:1px solid var(--lavender-line);}
+.cat-biz{background:var(--mint);border:1px solid var(--mint-line);}
+.cat-top{background:var(--yellow);border:1px solid var(--yellow-line);}
+
+.note-media{
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:2px;
+  margin-bottom:12px;
+  background:rgba(0,0,0,.06);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+}
+.note-media img{width:100%;height:100%;object-fit:cover;display:block;}
+
+.note-body{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  background-image:repeating-linear-gradient(to bottom, transparent 0 26px, rgba(43,32,22,.09) 26px 27px);
+  background-position:0 4px;
+}
+
+.note-tagrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.pill{
+  font-family:'Kalam',cursive;font-weight:700;font-size:.72rem;
+  padding:2px 9px;border-radius:20px;
+  background:rgba(43,32,22,.85);color:#fff9e8;letter-spacing:.02em;
+}
+.pill.alt{background:transparent;border:1.3px solid rgba(43,32,22,.55);color:var(--ink);}
+.time-tag{font-size:.74rem;color:var(--ink-faint);font-weight:500;}
+
+.note-title{
+  font-size:1.06rem;
+  font-weight:900;
+  line-height:1.42;
+  margin:2px 0 8px;
+  text-wrap:balance;
+}
+
+.note-summary{font-size:.86rem;line-height:1.75;color:var(--ink-soft);margin:0 0 8px;}
+.note-why{font-size:.82rem;line-height:1.7;color:var(--ink-soft);margin:0 0 10px;}
+.note-why b{color:var(--ink);}
+
+.note-footer{
+  margin-top:auto;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:8px;
+  padding-top:10px;
+  border-top:1px dashed rgba(43,32,22,.25);
+  font-size:.76rem;
+}
+.note-source{color:var(--ink-faint);}
+.note-cta{
+  font-family:'Kalam',cursive;font-weight:700;
+  color:var(--ink);white-space:nowrap;
+}
+.note:hover .note-cta{text-decoration:underline;}
+
+/* ---------- top5 numbering ---------- */
+.rank{
+  position:absolute; top:10px; right:10px;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--ink);color:var(--yellow);
+  font-family:'Kalam',cursive;font-weight:700;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 5px rgba(0,0,0,.3);
+  z-index:3;
+}
+
+/* ---------- spotlight ---------- */
+.spotlight{
+  position:relative;
+  text-decoration:none;
+  color:var(--ink);
+  background:var(--gold);
+  border:1px solid var(--gold-line);
+  border-radius:3px;
+  padding:30px 30px 26px;
+  transform:rotate(-0.6deg);
+  box-shadow:0 14px 26px var(--shadow), inset 0 0 0 1px rgba(255,255,255,.35);
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:26px;
+  align-items:center;
+}
+@media (max-width:760px){.spotlight{grid-template-columns:1fr;}}
+.spotlight::before{
+  content:"";position:absolute;top:-15px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  width:130px;height:30px;background:var(--tape);box-shadow:0 2px 3px rgba(0,0,0,.18);
+}
+.spotlight .pin{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  width:20px;height:20px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #fff8de, #e6b83e 45%, #8a5a2b 100%);
+  box-shadow:0 3px 5px rgba(0,0,0,.4);z-index:2;
+}
+.spotlight-media{aspect-ratio:16/9;border-radius:3px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.25);}
+.spotlight-media img{width:100%;height:100%;object-fit:cover;display:block;}
+.spotlight-body .pill{margin-bottom:10px;}
+.spotlight-body h2{font-size:clamp(1.3rem,3vw,1.7rem);font-weight:900;line-height:1.4;margin:0 0 12px;text-wrap:balance;}
+.spotlight-body p{font-size:.92rem;line-height:1.85;color:var(--ink-soft);margin:0 0 10px;}
+.spotlight-body .note-footer{border-top:1px dashed rgba(43,32,22,.3);}
+
+/* ---------- footer ---------- */
+footer{
+  max-width:820px;margin:56px auto 10px;text-align:center;
+  font-size:.78rem;color:rgba(43,32,22,.68);line-height:1.9;
+}
+footer .stamp{
+  display:inline-block;font-family:'Kalam',cursive;font-weight:700;
+  border:2px solid rgba(43,32,22,.35);color:rgba(43,32,22,.55);
+  padding:6px 16px;border-radius:6px;transform:rotate(-3deg);margin-bottom:14px;
+  letter-spacing:.05em;
+}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <header class="masthead">
-    <h1>📌 每日 AI 資訊</h1>
-    <div class="sub">2026年9月23日(星期三) ・ 資料擷取時間：台北時間 2026-09-23 上午</div>
-  </header>
+<header class="board-title">
+  <div class="eyebrow">Daily AI Briefing</div>
+  <h1 class="title">每日 AI 資訊</h1>
+  <div class="meta-line">2026年9月24日（星期四）</div>
+  <div class="meta-sub">更新時間：09:40（台北時間）・涵蓋過去 24 小時 AI 圈重要新聞</div>
+</header>
 
-  <section id="top5">
-    <div class="section-title"><span class="num">1</span>今日最重要的 5 條</div>
-    <div class="grid">
+<!-- ============ TOP 5 ============ -->
+<section class="section">
+  <div class="section-head">TOP 5 <span class="zh">今日最重要的 5 條</span></div>
+  <div class="notes-grid top5">
 
-      <a class="card has-pin" href="https://thedeepdive.ca/un-security-council-brings-deepseek-sam-altman-to-talk-about-ai-risks/" target="_blank" rel="noopener">
-        <span class="rank">01</span>
-        <img class="thumb" src="https://thedeepdive.ca/wp-content/uploads/2026/09/header-template.001-89.png" alt="聯合國安理會AI會議" loading="lazy">
-        <h3>聯合國安理會今日召開AI風險特別會議，OpenAI、Anthropic與中國業者罕見同場</h3>
-        <span class="label">新聞事實</span>
-        <p>法國以9月安理會輪值主席身分，召開15國安理會關於「AI與國際安全」的特別會議，訂於9月23日（台北時間）登場。OpenAI執行長Sam Altman確認親自出席，Anthropic預計由高層代表以視訊方式與會；中國業者DeepSeek與月之暗面（Moonshot）也獲邀發言，DeepSeek創辦人梁文鋒本人預計不會到場。</p>
-        <div class="why"><span class="label">為什麼重要</span>這是安理會首次同時邀請中美兩地最前沿AI開發商同台談AI安全，象徵AI治理正式進入最高層級地緣政治議程，後續能否形成跨陣營協調機制值得追蹤。</div>
-        <div class="meta"><span>🕐 2026-09-23（會議當日）</span><span>📰 The Deep Dive</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card has-pin cat-blue" href="https://openai.com/index/priorities-principles-third-party-assessments/" target="_blank" rel="noopener">
-        <span class="rank">02</span>
-        <img class="thumb" src="https://media.thenextweb.com/2026/09/openai-logo-smartphone-laptop-zac-wolff-unsplash.avif" alt="OpenAI 標誌" loading="lazy">
-        <h3>OpenAI公布第三方安全評估框架，首度開放訓練階段外部審查</h3>
-        <span class="label">新聞事實</span>
-        <p>OpenAI於9月22日發布文件，宣布讓外部獨立機構在模型「訓練、評估與部署」的更早期階段介入安全評估，而非僅在發布前才審查。文件列出四大優先評估領域與七項治理原則，並透露正與METR、Redwood Research等機構洽談。</p>
-        <div class="why"><span class="label">為什麼重要</span>前沿實驗室首度承諾把外部紅隊測試推進到訓練階段，若落實將提高全產業安全評估透明度，也可能成為其他實驗室仿效的行業標準。</div>
-        <div class="meta"><span>🕐 2026-09-22</span><span>📰 OpenAI 官方部落格</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card has-pin cat-green" href="https://techcrunch.com/2026/09/22/anthropic-releases-opus-5-5-with-lower-prices-and-fable-level-performance/" target="_blank" rel="noopener">
-        <span class="rank">03</span>
-        <img class="thumb" src="https://techcrunch.com/wp-content/uploads/2026/01/GettyImages-2252871842.jpg?w=1024" alt="Anthropic Opus 5.5" loading="lazy">
-        <h3>Anthropic發布Opus 5.5，降價同時追平旗艦Fable表現</h3>
-        <span class="label">新聞事實</span>
-        <p>Anthropic於9月22日發布Opus 5.5，輸出token價格由每百萬美元25降至20美元，多項基準測試超越參數規模更大的Fable，生物與資安能力上與Mythos相當。Sonnet 5.5、Haiku 5.5預計「未來數週內」跟進，距Opus 5（7月24日發布）僅兩個月。</p>
-        <div class="why"><span class="label">為什麼重要</span>「降價又升級」打破「更貴才更強」的慣性認知，顯示模型效率進展可能開始超越單純堆參數的路線，直接影響企業採購成本結構。</div>
-        <div class="meta"><span>🕐 2026-09-22（週二）</span><span>📰 TechCrunch</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card has-pin cat-orange" href="https://x.ai/news/grok-4-7" target="_blank" rel="noopener">
-        <span class="rank">04</span>
-        <img class="thumb" src="https://github.blog/wp-content/uploads/2026/09/654138421-056d370d-20ff-4c5e-97c5-e5ead93c8ee1.png" alt="GitHub Copilot 模型選單顯示 Grok 4.7" loading="lazy">
-        <h3>xAI發布Grok 4.7，同日登陸GitHub Copilot</h3>
-        <span class="label">新聞事實</span>
-        <p>xAI於9月21日發布Grok 4.7，參數規模達2.1兆（較Grok 4.6的1.5兆增加40%），輸入/輸出定價維持每百萬token 2美元/6美元，並首度混入SpaceX衛星遙測與工程日誌訓練資料。同日GitHub宣布Grok 4.7上線Copilot，開放Pro、Pro+、Max、Business、Enterprise方案使用。</p>
-        <div class="why"><span class="label">為什麼重要</span>定價與速度不變下大幅擴增模型規模，延續xAI「打平價格帶」策略；快速登陸Copilot也顯示各家前沿模型正加速搶占開發者日常工作流入口。</div>
-        <div class="meta"><span>🕐 2026-09-21</span><span>📰 xAI 官方 / GitHub Blog</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card has-pin cat-lavender" href="https://www.scientificamerican.com/article/mathematicians-use-ai-to-find-mysterious-symmetries-solving-decades-old-problem/" target="_blank" rel="noopener">
-        <span class="rank">05</span>
-        <img class="thumb" src="https://static.scientificamerican.com/dam/asset/4edea88b-e1e7-47d4-a024-64701af074d7/GettyImages-2262108239-cropped.jpeg?m=1790012229.627&w=600" alt="抽象對稱圖形示意" loading="lazy">
-        <h3>數學家借助AI攻克懸宕40年的M23反伽羅瓦難題</h3>
-        <span class="label">新聞事實</span>
-        <p>六人團隊結合AI運算探索與人類數學洞察，找到對應離散單群M23對稱性的多項式，補上自1980年代以來26個「不規則」情形中最後懸而未決的一個。同期由Terence Tao等人發起、6月啟動的群眾外包競賽SAIR，也完成24次多項式對應全部25000個傳遞群的清單，但奪冠的德國團隊主要仍以人工方法取勝。</p>
-        <div class="why"><span class="label">為什麼重要</span>顯示AI在最前沿純數學研究中開始扮演「探索未知結構空間」的實質工具角色，但人類在部分領域仍勝過AI輔助方法，兩者互補分工模式正在浮現。</div>
-        <div class="meta"><span>🕐 2026-09-22</span><span>📰 Scientific American</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-    </div>
-  </section>
-
-  <section id="models">
-    <div class="section-title"><span class="num">2</span>模型動態</div>
-    <div class="grid cols-2">
-
-      <a class="card cat-green" href="https://techcrunch.com/2026/09/22/anthropic-releases-opus-5-5-with-lower-prices-and-fable-level-performance/" target="_blank" rel="noopener">
-        <img class="thumb" src="https://techcrunch.com/wp-content/uploads/2026/01/GettyImages-2252871842.jpg?w=1024" alt="Anthropic Opus 5.5" loading="lazy">
-        <h3>Anthropic Opus 5.5：更便宜、追平Fable的新旗艦</h3>
-        <span class="label">新聞事實</span>
-        <p>Opus 5.5輸出定價降至每百萬token 20美元，多項基準超越更大型的Fable，並在生物、資安能力上比肩Mythos；Sonnet 5.5與Haiku 5.5將於未來數週跟進。安全評估延續METR、Frontier Design等外部機構的合作模式。</p>
-        <div class="why"><span class="label">為什麼重要</span>顯示Anthropic正把「效率」而非單純規模作為下一階段的競爭主軸。</div>
-        <div class="meta"><span>🕐 2026-09-22</span><span>📰 TechCrunch</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-orange" href="https://x.ai/news/grok-4-7" target="_blank" rel="noopener">
-        <img class="thumb" src="https://github.blog/wp-content/uploads/2026/09/654138421-056d370d-20ff-4c5e-97c5-e5ead93c8ee1.png" alt="Grok 4.7" loading="lazy">
-        <h3>xAI Grok 4.7：2.1兆參數、混入SpaceX工程資料</h3>
-        <span class="label">新聞事實</span>
-        <p>Grok 4.7參數量較上一版增加40%，context window達50萬token，定價不變。官方稱模型在困難問題上花更多時間覆核答案，並強調這是「安全護欄最強的一版」。第三方測試顯示CursorBench 4.0得分46.3%、DeepSWE v1.1得分71.0%，但GDPval等綜合基準仍落後Claude Fable 5.1。</p>
-        <div class="why"><span class="label">為什麼重要</span>將SpaceX的實體工程數據導入訓練，是「用真實物理世界資料強化推理」路線的具體案例。</div>
-        <div class="meta"><span>🕐 2026-09-21</span><span>📰 xAI 官方</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-    </div>
-  </section>
-
-  <section id="products">
-    <div class="section-title"><span class="num">3</span>產品工具</div>
-    <div class="grid">
-
-      <a class="card cat-blue" href="https://mixed-news.com/en/chatgpt-experian-credit-score-finances-us-plus-pro/" target="_blank" rel="noopener">
-        <img class="thumb" src="https://mixed-news.com/en/wp-content/uploads/2026/09/Card_-_Finance-1200x1326.png" alt="ChatGPT Finances 信用分數卡片" loading="lazy">
-        <h3>ChatGPT新增Experian信用分數追蹤功能</h3>
-        <span class="label">新聞事實</span>
-        <p>OpenAI於9月21日起，在ChatGPT「Finances」中為美國Plus、Pro用戶開放連結Experian信用報告與VantageScore 3.0信用分數，每月更新一次並可提醒異動；此功能與既有Plaid銀行帳戶連結彼此獨立，授權透過Experian代管表單完成，ChatGPT本身無法申訴或凍結信用紀錄。</p>
-        <div class="why"><span class="label">為什麼重要</span>顯示OpenAI持續把ChatGPT打造成個人理財入口，並藉由與Experian等既有金融基礎設施商合作快速擴張功能邊界。</div>
-        <div class="meta"><span>🕐 2026-09-21～22</span><span>📰 Mixed News</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-mint" href="https://techcrunch.com/2026/09/22/astroforge-is-putting-ai-in-command-of-its-next-spacecraft/" target="_blank" rel="noopener">
-        <img class="thumb" src="https://techcrunch.com/wp-content/uploads/2026/09/AstroForge-DeepSpace2.avif?w=1024" alt="AstroForge 太空船" loading="lazy">
-        <h3>AstroForge推出自研太空船AI「Solo」，計畫零地面指令飛行</h3>
-        <span class="label">新聞事實</span>
-        <p>小行星採礦新創AstroForge公布自研transformer控制系統「Solo」，結合傳統物理控制演算法與約2500個太空船感測器訓練的智慧層。公司計畫2027年於Stoke Space首次火箭發射任務「Autonomy-1」中，讓太空船在脫離運載火箭後不接收任何地球指令，自主完成全部任務目標（含真實NASA戈達德太陽物理酬載）。此前2025年其Odin探測器曾因通訊問題失聯。</p>
-        <div class="why"><span class="label">為什麼重要</span>神經網路直接負責太空船姿態與任務決策極為罕見，此案例是AI從「輔助分析」邁向「即時自主控制關鍵任務系統」的指標性嘗試。</div>
-        <div class="meta"><span>🕐 2026-09-22</span><span>📰 TechCrunch（記者 Tim Fernholz）</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-pink" href="https://openai.com/index/astra-for-law/" target="_blank" rel="noopener">
-        <h3>OpenAI推出法律垂直應用「Astra for Law」與ChatGPT for Word正式上線</h3>
-        <span class="label">新聞事實</span>
-        <p>OpenAI於9月17日發布以GPT-6 Astra為基礎、針對法律工作調校的「Astra for Law」，內建法律搜尋索引與26家生態系夥伴外掛（含Thomson Reuters、Harvey、iManage等），首波以「信任存取」計畫開放給特定律所；同日ChatGPT for Word正式全面上線，供律師在Word內直接校閱、修訂與排版。</p>
-        <div class="why"><span class="label">為什麼重要</span>顯示前沿模型廠商正加速切入高單價的專業垂直市場，法律科技的既有供應鏈（Thomson Reuters等）選擇整合而非對抗。</div>
-        <div class="meta"><span>🕐 2026-09-17</span><span>📰 OpenAI 官方部落格</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-    </div>
-  </section>
-
-  <section id="agent-tools">
-    <div class="section-title"><span class="num">4</span>Agent 與程式設計工具</div>
-    <div class="grid cols-2">
-
-      <a class="card cat-green" href="https://github.blog/changelog/2026-09-21-grok-4-7-is-now-available-in-github-copilot/" target="_blank" rel="noopener">
-        <img class="thumb" src="https://github.blog/wp-content/uploads/2026/09/654138421-056d370d-20ff-4c5e-97c5-e5ead93c8ee1.png" alt="GitHub Copilot 模型選單" loading="lazy">
-        <h3>GitHub Copilot上線Grok 4.7，鎖定多步驟Agent任務</h3>
-        <span class="label">新聞事實</span>
-        <p>GitHub於9月21日宣布Grok 4.7加入Copilot模型選單，鎖定複雜多步驟編碼與Agent式工作流，涵蓋VS Code、Visual Studio、JetBrains、Xcode、Eclipse、Copilot CLI與Copilot App，採用量計費，企業管理員可透過模型政策設定控管存取。</p>
-        <div class="why"><span class="label">為什麼重要</span>Copilot持續採多模型並行策略，讓開發者可依任務挑選不同供應商模型，模型商之間的競爭焦點正從「跑分」轉向「被主流IDE收錄的速度」。</div>
-        <div class="meta"><span>🕐 2026-09-21</span><span>📰 GitHub Blog</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-orange" href="https://github.com/agentproto/ts/releases/tag/release/2026-09-22" target="_blank" rel="noopener">
-        <h3>開源代理執行環境agentproto釋出9月22日更新</h3>
-        <span class="label">新聞事實</span>
-        <p>TypeScript開源代理執行環境agentproto釋出9月22日版本更新，改善MCP-Apps元件與訊息傳遞機制。此專案讓開發者以宣告式規格定義工具、技能、Agent、知識與工作流，可在背景同時運行Claude Code、Codex、opencode等多種編碼代理，並在變更落地前先行檢查其產出，再投射至CLI、HTTP、MCP、SDK、Mastra與AI SDK等多種介面。目前版本為0.14.0-alpha。</p>
-        <div class="why"><span class="label">為什麼重要</span>反映Agent基礎設施正從「單一框架」走向「執行環境層」的分工，開發者對「多代理協作前先驗證」的需求日益明確。</div>
-        <div class="meta"><span>🕐 2026-09-22</span><span>📰 GitHub（agentproto/ts）</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-    </div>
-  </section>
-
-  <section id="opensource">
-    <div class="section-title"><span class="num">5</span>開源項目</div>
-    <div class="grid">
-
-      <a class="card cat-orange" href="https://github.com/agentproto/ts" target="_blank" rel="noopener">
-        <h3>agentproto／ts：開放式Agent執行環境</h3>
-        <span class="label">新聞事實</span>
-        <p>agentproto以AIP規格檔定義工具、技能、Agent、知識、工作流與政策，TypeScript執行環境負責載入、運行並投射到CLI、HTTP、MCP、Mastra、Vercel AI SDK等多種介面，9月22日釋出最新版本，持續於alpha階段快速迭代。</p>
-        <div class="why"><span class="label">為什麼重要</span>提供了一個與模型供應商無關的「Agent運行時」抽象層，有機會降低企業在不同編碼代理間切換的整合成本。</div>
-        <div class="meta"><span>🕐 2026-09-22</span><span>📰 GitHub</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-mint" href="https://github.com/trycua/cua" target="_blank" rel="noopener">
-        <h3>電腦操作代理專案trycua/cua熱度單日暴增</h3>
-        <span class="label">新聞事實</span>
-        <p>開源「電腦使用代理（Computer-Use Agent）」基礎設施專案trycua/cua近日在GitHub趨勢榜單日新增約609顆星，在同期熱門專案中排名第二，累計已突破2.6萬顆星。專案提供跨macOS、Linux、Windows的沙箱、SDK與基準測試工具，用於訓練與評估能操控完整桌面的AI代理。</p>
-        <div class="why"><span class="label">為什麼重要</span>反映開發者社群對「讓AI直接操作真實作業系統畫面」這類代理型態的興趣正快速升溫，是繼程式碼代理後的下一個熱門方向。</div>
-        <div class="meta"><span>🕐 2026-09-22（熱度統計）</span><span>📰 GitHub Trending</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-lavender" href="https://www.anthropic.com/research/claude-uplifts-biomolecular-modeling" target="_blank" rel="noopener">
-        <h3>Anthropic開源Claude優化的30餘個生物分子模型</h3>
-        <span class="label">新聞事實</span>
-        <p>Anthropic研究顯示，Claude在近四週內對36個涵蓋共折疊結構預測、蛋白質語言模型、基因體學等六大類的開源生物分子模型進行優化，平均加速約4倍，並打造可在單一NVIDIA GPU節點上處理逾萬token生物分子系統的低記憶體模式；相關優化程式碼已全數開源，並與Adaptyv Bio共同發起蛋白質設計競賽，提供逾500萬美元等值的實驗驗證與運算額度。</p>
-        <div class="why"><span class="label">為什麼重要</span>顯示前沿LLM開始被用作「加速既有科學軟體」的工程工具，而非僅止於生成假說，對生物計算基礎設施有直接效益。</div>
-        <div class="meta"><span>🕐 2026-09-17（研究發布）</span><span>📰 Anthropic 官方研究部落格</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-    </div>
-  </section>
-
-  <section id="research">
-    <div class="section-title"><span class="num">6</span>研究論文</div>
-    <div class="grid cols-2">
-
-      <a class="card cat-lavender" href="https://www.scientificamerican.com/article/mathematicians-use-ai-to-find-mysterious-symmetries-solving-decades-old-problem/" target="_blank" rel="noopener">
-        <img class="thumb" src="https://static.scientificamerican.com/dam/asset/4edea88b-e1e7-47d4-a024-64701af074d7/GettyImages-2262108239-cropped.jpeg?m=1790012229.627&w=600" alt="抽象對稱圖形" loading="lazy">
-        <h3>M23反伽羅瓦問題求解：AI+人類的分工實驗</h3>
-        <span class="label">新聞事實</span>
-        <p>六人研究團隊利用AI代理探索座標系統，找出對應離散單群M23對稱性的23次多項式，解決了自1980年代遺留至今、反伽羅瓦問題中最後一個「不規則」情形。同期由Terence Tao等發起的SAIR群眾外包競賽也完成24次多項式對應全部25000個傳遞群（24T1至24T25000）的清單。</p>
-        <div class="why"><span class="label">為什麼重要</span>兩條路徑（AI輔助探索 vs. 人工方法奪冠）並存，說明目前AI在數學研究上仍是「強力工具」而非全面取代人類洞察。</div>
-        <div class="meta"><span>🕐 2026-09-22</span><span>📰 Scientific American</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-blue" href="https://cognition.com/blog/factoring-rsa-260" target="_blank" rel="noopener">
-        <h3>Cognition用Agent「Devin」打造GPU篩選器，刷新RSA質因數分解紀錄</h3>
-        <span class="label">新聞事實</span>
-        <p>Cognition工程師Eric Lu以自然語言指導自主編碼代理Devin，打造開源GNFS篩選軟體CADO-NFS的GPU版本（代號glas），在約3週、耗費約40萬美元GPU運算資源（約4900 GPU-天）後，成功分解862位元的RSA-260，刷新自2020年2月以來的公開分解紀錄。官方部落格發布於9月9日，此後持續有科技媒體追蹤報導其對現行密碼學的影響。</p>
-        <div class="why"><span class="label">為什麼重要</span>Lu估算以市場GPU價格分解1024位元RSA數字約需3000萬美元，顯示編碼代理已能承擔真正高難度的系統工程專案；但RSA-2048等主流加密規格目前仍不受影響。</div>
-        <div class="meta"><span>🕐 2026-09-09（發布）／近期持續受關注<span class="secondhand">較早發布，近期延燒</span></span><span>📰 Cognition 官方部落格</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-    </div>
-  </section>
-
-  <section id="business">
-    <div class="section-title"><span class="num">7</span>行業商業</div>
-    <div class="grid">
-
-      <a class="card cat-mint" href="https://finance.yahoo.com/markets/stocks/articles/amd-joins-1-trillion-market-172341283.html" target="_blank" rel="noopener">
-        <h3>AMD市值站上1兆美元，成為第四家兆元美股晶片公司</h3>
-        <span class="label">新聞事實</span>
-        <p>AMD股價於9月21日單日上漲9%，收在610美元、盤中一度觸及613.92美元，市值短暫突破1兆美元，成為繼Nvidia、博通（Broadcom）、美光（Micron）後第四家達成此里程碑的美國晶片公司。股價過去五個交易日累計上漲約24%，年初至今漲幅超過180%，資料中心業務Q2營收年增107%至67億美元，動能來自OpenAI、Meta、Anthropic等客戶的GPU長期承購。</p>
-        <div class="why"><span class="label">為什麼重要</span>顯示AI運算需求已從Nvidia一家獨大，擴散到讓「第二供應商」也具備兆元市值的規模，晶片供應鏈的資本市場敘事正在擴大。</div>
-        <div class="meta"><span>🕐 2026-09-21</span><span>📰 Investing.com（via Yahoo Finance）</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-pink" href="https://www.semafor.com/article/09/22/2026/bessent-eyed-for-trumps-ai-czar" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.semafor.com/9cc67485c8c0bb4f7781617eba8a359a391c5ec6-5000x3333.jpg?w=740&q=75&auto=format&h=493" alt="Scott Bessent" loading="lazy">
-        <h3>美國財政部長Bessent傳為川普政府「AI沙皇」熱門人選</h3>
-        <span class="label">新聞事實</span>
-        <p>據Semafor於9月22日引述三名知情人士報導，美國財政部長Scott Bessent正成為川普政府新設「AI沙皇」職位的熱門人選之一，本週已與中國國務院副總理何立峰就「AI事件通報機制」進行早期對話。其他候選人包括白宮科技政策辦公室主任Michael Kratsios與人事管理局局長Scott Kupor。川普尚未做最終決定，白宮未證實報導內容。</p>
-        <div class="why"><span class="label">為什麼重要</span>若財政部長身兼AI政策要角，意味美國將把AI安全與監理更緊密地綁入總體經濟與對中政策架構，而非僅交由科技政策幕僚處理。</div>
-        <div class="meta"><span>🕐 2026-09-22</span><span>📰 Semafor</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-      <a class="card cat-lavender" href="https://www.cnbc.com/2026/09/05/anthropic-ipo-launch-shifts-toward-mid-october.html" target="_blank" rel="noopener">
-        <h3>Anthropic上市時程更新：路演最快10月中旬啟動</h3>
-        <span class="label">新聞事實</span>
-        <p>Anthropic已於6月1日向美國證管會（SEC）機密提交S-1註冊聲明草案，近期報導指出公開版招股書可能延至9月底才公布，路演最快落在10月中旬，力拚在11月期中選舉前完成掛牌，由高盛、摩根大通、摩根士丹利主辦，市場預期募資規模逾600億美元，估值基礎為今年稍早965億美元估值輪之上。</p>
-        <div class="why"><span class="label">為什麼重要</span>作為與OpenAI並列的兩大前沿實驗室之一，Anthropic的上市時程與估值將是觀察整體AI產業資本市場情緒的重要指標。</div>
-        <div class="meta"><span>🕐 時程持續更新中（截至2026-09-22）</span><span>📰 CNBC 等財經媒體</span></div>
-        <span class="readmore">看原文 →</span>
-      </a>
-
-    </div>
-  </section>
-
-  <section id="spotlight">
-    <div class="section-title"><span class="num">★</span>今日最值得關注的一件事</div>
-    <a class="spotlight has-pin" href="https://thedeepdive.ca/un-security-council-brings-deepseek-sam-altman-to-talk-about-ai-risks/" target="_blank" rel="noopener">
-      <img src="https://thedeepdive.ca/wp-content/uploads/2026/09/header-template.001-89.png" alt="聯合國安理會AI會議" loading="lazy">
-      <h3>安全承諾與地緣政治同一天交會：安理會AI峰會</h3>
-      <p><span class="label">新聞事實</span>9月23日，法國主持的聯合國安理會就「AI與國際安全」召開特別會議，OpenAI執行長Sam Altman確認到場，Anthropic高層預計視訊與會，中國業者DeepSeek、月之暗面也獲邀發言——這是安理會首次讓中美前沿AI開發商同場談安全議題。會議召開前一天，OpenAI才剛公布史上最開放的第三方安全評估框架，承諾讓外部機構在模型訓練階段就能介入審查。</p>
-      <p><span class="label">為什麼重要</span>把這兩則新聞放在一起看：業界巨頭一邊在價格與規模上激烈廝殺（Opus 5.5降價、Grok 4.7擴增至2.1兆參數），一邊卻同步向監理機構釋出「我們願意被更早、更深入地檢視」的訊號。這種「競爭與自我約束並行」的姿態，很可能是因為業界內部（包括Anthropic執行長Dario Amodei本人）已多次公開呼籲協調放緩開發速度，擔心系統很快就會強大到可能自我改進並脫離人類控制。安理會這場會議能否催生出跨越中美陣營的具體協調機制，將是觀察全球AI治理走向的關鍵指標，遠比單一模型的跑分數字更值得長期關注。</p>
-      <div class="meta"><span>🕐 2026-09-23</span><span>📰 The Deep Dive／Business Standard 等綜合報導</span></div>
-      <span class="readmore">看原文 →</span>
+    <a class="note cat-top has-pin" href="https://www.anthropic.com/claude-opus-5-5" target="_blank" rel="noopener noreferrer">
+      <span class="pin"></span><span class="tape"></span>
+      <span class="rank">1</span>
+      <div class="note-media"><img src="https://www-cdn.anthropic.com/images/4zrzovbb/website/f4d37a1d1f582f53f4e89440062b649b6273a093-1200x630.jpg" alt="Claude Opus 5.5" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill">模型動態</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">Anthropic 發布 Claude Opus 5.5，性能追平 Fable 5.1、成本降四成</h3>
+        <p class="note-summary">Anthropic 於 9/22 發布 5.5 系列首款模型 Opus 5.5，多數任務表現追平旗艦 Claude Fable 5.1，支援 100 萬 token 上下文窗口，輸出速度較 Opus 5 快 30%，價格降至每百萬 token 輸入 4 美元／輸出 20 美元（原 5／25 美元）。已同步上線 Pro/Max/Team/Enterprise 及三大雲平台。</p>
+        <p class="note-why"><b>為什麼重要（主觀判斷）：</b>旗艦模型大改版同時大砍價格，將牽動整個前沿模型市場的定價競爭。</p>
+        <div class="note-footer"><span class="note-source">Anthropic 官方部落格・官方</span><span class="note-cta">看原文 →</span></div>
+      </div>
     </a>
-  </section>
 
-  <footer>
-    每日 AI 資訊由自動化流程彙整公開報導產製，內容以各原始新聞來源為準；如發現連結失效或事實有誤，請以原文網站最新版本為準。<br>
-    產製時間：2026-09-23（台北時間）
-  </footer>
+    <a class="note cat-top has-pin" href="https://github.blog/changelog/2026-09-22-openais-gpt-6-sol-and-gpt-6-luna-now-available/" target="_blank" rel="noopener noreferrer">
+      <span class="pin"></span><span class="tape"></span>
+      <span class="rank">2</span>
+      <div class="note-media"><img src="https://github.blog/wp-content/uploads/2026/09/656074192-a3b03232-c5df-4c96-9bbd-2665fe783765.png?resize=2064%2C713" alt="GPT-6 Sol 與 GPT-6 Luna" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill">模型動態</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">OpenAI 推出 GPT-6 Sol 與 GPT-6 Luna，價格較前代砍半</h3>
+        <p class="note-summary">GPT-6 Sol（互動與代理式編碼均衡模型）與 GPT-6 Luna（系列最輕量款）同步上線，Sol 定價每百萬 token 輸入 2 美元／輸出 10 美元，Luna 僅 0.1／0.5 美元，較 GPT-5.6 系列降價約 50%，已陸續開放至 ChatGPT、Codex、API 及 GitHub Copilot。</p>
+        <p class="note-why"><b>為什麼重要（主觀判斷）：</b>前沿模型價格持續下探，大幅降低中小型開發者與企業導入 AI 的門檻。</p>
+        <div class="note-footer"><span class="note-source">GitHub 官方 Changelog・官方</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-top has-pin" href="https://claude.com/blog/claude-marketplace" target="_blank" rel="noopener noreferrer">
+      <span class="pin"></span><span class="tape"></span>
+      <span class="rank">3</span>
+      <div class="note-media"><img src="https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/690515665479bb5c903bedd8_og_evaluate-prompts.jpg" alt="Claude Marketplace" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill">產品工具</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">Anthropic 推出 Claude Marketplace，把模型變成生態系平台</h3>
+        <p class="note-summary">Anthropic 官方宣布推出 Claude Marketplace，整合逾 2,000 個外掛／連接器，以及 GitLab、Harvey、Replit、Snowflake 等夥伴打造的 Claude 驅動產品，企業可用既有承諾支出採購，Anthropic 目前不抽成。</p>
+        <p class="note-why"><b>為什麼重要（主觀判斷）：</b>首度把「模型」擴展為「平台」，商業模式對標雲端市集，可能改變企業採購 AI 軟體的方式。</p>
+        <div class="note-footer"><span class="note-source">Claude by Anthropic・官方</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-top has-pin" href="https://techcrunch.com/2026/09/23/meta-made-a-tamagotchi-like-wearable-for-its-muse-ai-agent/" target="_blank" rel="noopener noreferrer">
+      <span class="pin"></span><span class="tape"></span>
+      <span class="rank">4</span>
+      <div class="note-media"><img src="https://techcrunch.com/wp-content/uploads/2026/09/mark-zuckerberg-muse-charm-getty.jpg?w=1024" alt="Meta Muse Charm" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill">產業商業</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">Meta 發表掌心大小穿戴裝置「Muse Charm」，把 AI 代理實體化</h3>
+        <p class="note-summary">Zuckerberg 在 Connect 大會突襲發表 Muse Charm，將 AI 助手 Muse 化為可隨身攜帶的實體角色，具指紋感應與即時語音功能，預計 12 月假期檔上市。</p>
+        <p class="note-why"><b>為什麼重要（主觀判斷）：</b>顯示大型科技公司正把 AI 競賽延伸到穿戴裝置，企圖建立脫離手機的 AI 分發入口。</p>
+        <div class="note-footer"><span class="note-source">TechCrunch・第一手報導</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-top has-pin" href="https://news.un.org/en/story/2026/09/1168414" target="_blank" rel="noopener noreferrer">
+      <span class="pin"></span><span class="tape"></span>
+      <span class="rank">5</span>
+      <div class="note-media"><img src="https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Collections/Production%20Library/2026/09/23-09-2026-UN-Photo-Sam-Altman.jpg/image1170x530cropped.jpg" alt="聯合國安理會 AI 安全簡報" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill">產業商業</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">OpenAI、Anthropic 執行長同台聯合國安理會，籲建立 AI 國際監管</h3>
+        <p class="note-summary">法國主持的安理會會議上，Sam Altman、Dario Amodei 與 Yoshua Bengio 等人簡報 AI 風險；中國 DeepSeek、Moonshot 等業者也受邀發言，警告「失控 AI 是人類前所未有的威脅」。</p>
+        <p class="note-why"><b>為什麼重要（主觀判斷）：</b>安理會首次同時邀請中美前沿 AI 開發商對話安全議題，可能成為國際 AI 治理框架的重要伏筆。</p>
+        <div class="note-footer"><span class="note-source">UN News・官方</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ 模型動態 ============ -->
+<section class="section">
+  <div class="section-head">MODELS <span class="zh">模型動態</span></div>
+  <div class="notes-grid">
+
+    <a class="note cat-model" href="https://www.anthropic.com/claude-opus-5-5" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://www-cdn.anthropic.com/images/4zrzovbb/website/f4d37a1d1f582f53f4e89440062b649b6273a093-1200x630.jpg" alt="Claude Opus 5.5" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">Claude Opus 5.5 發布：追平 Fable 5.1、降價 40%</h3>
+        <p class="note-summary">Anthropic 新一代旗艦模型，支援 100 萬 token 上下文窗口，輸出速度較上一代快 30%，並已同步上線 AWS、Google Cloud、Microsoft Foundry/Azure。</p>
+        <p class="note-why"><b>為什麼重要：</b>大幅降價可能引發新一輪 API 定價競爭。</p>
+        <div class="note-footer"><span class="note-source">Anthropic 官方部落格</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-model" href="https://github.blog/changelog/2026-09-22-openais-gpt-6-sol-and-gpt-6-luna-now-available/" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://github.blog/wp-content/uploads/2026/09/656074192-a3b03232-c5df-4c96-9bbd-2665fe783765.png?resize=2064%2C713" alt="GPT-6 Sol 與 Luna" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">GPT-6 Sol 與 GPT-6 Luna 上線，價格砍半</h3>
+        <p class="note-summary">OpenAI 官網原文因反爬蟲無法直接開啟，改以 GitHub 官方 Changelog 佐證：Sol 主打編碼代理任務，Luna 為輕量低成本款，已進駐 ChatGPT、Codex 與 GitHub Copilot。</p>
+        <p class="note-why"><b>為什麼重要：</b>前沿模型持續打價格戰，降低企業導入成本。</p>
+        <div class="note-footer"><span class="note-source">GitHub 官方 Changelog</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-model" href="https://x.ai/news/grok-4-7" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://x.ai/images/news/grok-4-7-og.webp" alt="Grok 4.7" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-21</span></div>
+        <h3 class="note-title">xAI 發布 Grok 4.7，參數規模增 40%、價格不變</h3>
+        <p class="note-summary">Grok 4.7 參數量達 2.1 兆（前代 1.5 兆），在 CursorBench 4.0 等程式碼與安全基準取得前段表現，已整合進 Cursor、Grok Build 與 Grok API。</p>
+        <p class="note-why"><b>為什麼重要：</b>同價位下大幅提升模型規模，強化 xAI 在程式碼代理領域的競爭力。</p>
+        <div class="note-footer"><span class="note-source">xAI 官方部落格</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-model" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini-audio__keyword__metacard__light.width-1300.png" alt="Gemini 3.8 TTS" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">Gemini 3.8 Flash TTS 系列正式開放，支援語音設計</h3>
+        <p class="note-summary">Google 正式（GA）推出 Flash TTS／Flash-Lite TTS，可用文字描述從零設計聲音、支援逾 100 種語言，並能以 30 秒音檔複製聲線，已在 API、AI Studio、Google Vids 上線。</p>
+        <p class="note-why"><b>為什麼重要：</b>語音生成正式化並具「設計」能力，對 Podcast、有聲書、遊戲配音有直接商業意義。</p>
+        <div class="note-footer"><span class="note-source">Google 官方部落格</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ 產品工具 ============ -->
+<section class="section">
+  <div class="section-head">PRODUCTS <span class="zh">產品工具</span></div>
+  <div class="notes-grid">
+
+    <a class="note cat-product" href="https://claude.com/blog/claude-marketplace" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/690515665479bb5c903bedd8_og_evaluate-prompts.jpg" alt="Claude Marketplace" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">Claude Marketplace：外掛、Agent 與顧問服務一站整合</h3>
+        <p class="note-summary">整合逾 2,000 個連接器／外掛，以及 GitLab、Harvey、Legora、Lovable、Replit、Snowflake、CrowdStrike 等夥伴打造的產品，並納入 Accenture、BCG、Deloitte 等顧問夥伴網路。</p>
+        <p class="note-why"><b>為什麼重要：</b>把模型公司延伸為生態系平台，可能改變企業採購 AI 軟體與服務的方式。</p>
+        <div class="note-footer"><span class="note-source">Claude by Anthropic</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-product" href="https://www.engadget.com/2267230/everything-announced-at-meta-connect-2026/" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://www.engadget.com/img/gallery/everything-announced-at-meta-connect-2026/intro-1790209433.jpg" alt="Meta Connect 2026" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill">二手來源</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">Meta Connect 2026：新款 VR 眼鏡、Ray-Ban Meta Audio 齊發</h3>
+        <p class="note-summary">Meta 於 Connect 主題演講發表售價 1,299 美元、明年春季上市的 VR 眼鏡（內建 Meta AI 語音與手勢控制），以及首款無相機的 Ray-Ban Meta Audio（10/13 上市，349 美元起）。</p>
+        <p class="note-why"><b>為什麼重要：</b>Meta 持續押注穿戴式裝置作為下一代 AI 助理入口。</p>
+        <div class="note-footer"><span class="note-source">Engadget 現場報導</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ Agent 與程式設計工具 ============ -->
+<section class="section">
+  <div class="section-head">DEV TOOLS <span class="zh">Agent 與程式設計工具</span></div>
+  <div class="notes-grid">
+
+    <a class="note cat-agent" href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-body" style="padding-top:2px;">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-22 / 09-23</span></div>
+        <h3 class="note-title">Claude Code v2.1.280/281：Opus 5.5 成為預設模型</h3>
+        <p class="note-summary">官方 Changelog 顯示 Opus 5.5 已成為預設 Opus 模型（百萬 token 上下文），新版並加入桌面版金鑰閘道強化、Bedrock IAM 角色支援、MCP elicitation，同時修復多項當機與快取失效問題。</p>
+        <p class="note-why"><b>為什麼重要：</b>反映 Claude Code 在多雲部署與穩定性上的持續投入，是企業級導入的重要參考。</p>
+        <div class="note-footer"><span class="note-source">Claude Code 官方文件</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-agent" href="https://github.blog/changelog/2026-09-22-claude-opus-5-5-is-now-available-in-github-copilot/" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://github.blog/wp-content/uploads/2026/09/654867127-281a777b-40e7-4dc2-b526-d16cd41d9df5.png" alt="GitHub Copilot 新模型" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">GitHub Copilot 同日上線 Claude Opus 5.5 與 GPT-6 Sol／Luna</h3>
+        <p class="note-summary">Opus 5.5 開放 Pro+、Max、Business、Enterprise 方案使用，測試顯示能以更少步驟完成與 Opus 5 相當的任務；同日 GPT-6 Sol／Luna 也同步登陸 VS Code、Visual Studio、JetBrains 等平台。</p>
+        <p class="note-why"><b>為什麼重要：</b>「多模型選擇」已成主流編碼助理標配，開發者可依成本／品質彈性切換。</p>
+        <div class="note-footer"><span class="note-source">GitHub Changelog</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-agent" href="https://github.blog/changelog/2026-09-22-new-features-and-improvements-in-copilot-for-jetbrains/" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-new-releases.jpg" alt="Copilot for JetBrains" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">Copilot for JetBrains v1.18：新增 AI 工具核准機制</h3>
+        <p class="note-summary">新增「AI 輔助工具核准」機制（自動核准低風險操作、保留人工把關高風險決策）、對話重新編輯、組織層級技能分享，以及 MCP 伺服器逐工具持久化權限控制。</p>
+        <p class="note-why"><b>為什麼重要：</b>聚焦權限自動化與人機協作分寸，是編碼代理從輔助走向半自主的關鍵一步。</p>
+        <div class="note-footer"><span class="note-source">GitHub Changelog</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ 開源項目 ============ -->
+<section class="section">
+  <div class="section-head">OPEN SOURCE <span class="zh">開源項目</span></div>
+  <div class="notes-grid">
+
+    <a class="note cat-oss" href="https://huggingface.co/Qwen/Qwen-Image-2.1" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen-Image/image2.1/images/example-01.png" alt="Qwen-Image-2.1" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-20・近期熱門</span></div>
+        <h3 class="note-title">阿里通義 Qwen-Image-2.1 開源：統一生圖與編圖</h3>
+        <p class="note-summary">約 7B 參數的視覺生成模型，支援原生透明（RGBA）出圖、最多 10 張參考圖的多圖編輯，以及多種畫面比例。目前為 Hugging Face 模型熱度榜首。</p>
+        <p class="note-why"><b>為什麼重要：</b>開源文生圖／編圖模型快速逼近商用閉源工具水準。</p>
+        <div class="note-footer"><span class="note-source">GitHub / Hugging Face - QwenLM</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-oss" href="https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/resolve/main/assets/architecture.png" alt="MiMo-V2.6" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">小米開源 MiMo-V2.6：兆級參數全模態模型</h3>
+        <p class="note-summary">採稀疏 MoE 架構（Pro 版 1.02T 總參數／42B 啟動參數），原生支援文字、圖片、影片、音訊四模態輸入，具百萬 token 上下文窗口，並以 MIT 授權釋出。</p>
+        <p class="note-why"><b>為什麼重要：</b>中國廠商少見以開源授權釋出兆級參數全模態模型，對開源社群具指標意義。</p>
+        <div class="note-footer"><span class="note-source">Hugging Face - XiaomiMiMo</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-oss" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://opengraph.githubassets.com/1/anthropics/financial-services" alt="anthropics/financial-services" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">最近更新 2026-09-21・近期熱門</span></div>
+        <h3 class="note-title">Anthropic 開源金融服務 Agent 套件</h3>
+        <p class="note-summary">提供投行、股票研究、私募股權、財富管理、基金行政等場景的參考 Agent 與 Skill，並整合 Daloopa、Morningstar、FactSet 等 11 家以上資料商的 MCP 連接器。</p>
+        <p class="note-why"><b>為什麼重要：</b>顯示通用 Agent 框架正深入受監管的高價值垂直產業。</p>
+        <div class="note-footer"><span class="note-source">GitHub - Anthropic</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-oss" href="https://github.com/google/ax" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://opengraph.githubassets.com/1/google/ax" alt="google/ax" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方・早期階段</span><span class="time-tag">最近更新 2026-09-23</span></div>
+        <h3 class="note-title">Google 開源 Agent 編排引擎「ax」</h3>
+        <p class="note-summary">聲明式 Agent 編排引擎，可在 Kubernetes 叢集中管理自治 Agent 工作負載的沙箱執行、工作區配置與網路隔離，以 YAML 描述任務與環境。</p>
+        <p class="note-why"><b>為什麼重要：</b>反映業界從實驗性 Agent 轉向生產級 Agent 基礎設施的趨勢。</p>
+        <div class="note-footer"><span class="note-source">GitHub - Google</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ 研究論文 ============ -->
+<section class="section">
+  <div class="section-head">PAPERS <span class="zh">研究論文</span></div>
+  <div class="notes-grid">
+
+    <a class="note cat-paper" href="https://arxiv.org/abs/2609.25804" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-body" style="padding-top:2px;">
+        <div class="note-tagrow"><span class="pill alt">arXiv</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">The Tasteful Agent：量化 AI Agent 的「決策品味」</h3>
+        <p class="note-summary">提出 Taste-Bench 基準，評估 Agent 在長流程任務分岔點選擇較優方向的能力，自動從真實執行軌跡挖掘決策點。目前最佳模型僅能答對 59.7%，更大推理算力也不提升準確率。</p>
+        <p class="note-why"><b>為什麼重要：</b>首次系統性量化 Agent 的判斷力而非單純任務成功率，Hugging Face 今日論文榜熱度最高（111 upvotes）。</p>
+        <div class="note-footer"><span class="note-source">arXiv 2609.25804</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-paper" href="https://arxiv.org/abs/2609.25270" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-body" style="padding-top:2px;">
+        <div class="note-tagrow"><span class="pill alt">arXiv</span><span class="time-tag">2026-09-21</span></div>
+        <h3 class="note-title">RULER：用「評分準則」取代純量指標生成 SVG</h3>
+        <p class="note-summary">針對缺乏視覺真值的文字轉 SVG 任務，以視覺語言模型逐項評分轉化為 RL 獎勵訊號，在 MMSVG 基準上將評分由 0.432 提升至 0.693，效果追平規模大得多的 DeepSeek-V3。</p>
+        <p class="note-why"><b>為什麼重要：</b>示範用 rubric 取代純量獎勵能緩解生成式 RL 的 reward hacking 問題，具通用啟發性。</p>
+        <div class="note-footer"><span class="note-source">arXiv 2609.25270</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-paper" href="https://arxiv.org/abs/2609.24981" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-body" style="padding-top:2px;">
+        <div class="note-tagrow"><span class="pill alt">arXiv</span><span class="time-tag">2026-09-21</span></div>
+        <h3 class="note-title">GAE：幾何原生潛空間讓 3D 世界生成更一致</h3>
+        <p class="note-summary">將幾何基礎模型特徵重參數化為緊湊潛空間，可同時解碼外觀、深度、相機參數與點雲；換用該潛空間後 FVD 在 RealEstate10K 上下降 12.7%，相機軌跡誤差減半。</p>
+        <p class="note-why"><b>為什麼重要：</b>指出「畫面好看但 3D 不一致」的根本原因在表示層，為世界模型生成提供新思路。</p>
+        <div class="note-footer"><span class="note-source">arXiv 2609.24981</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-paper" href="https://arxiv.org/abs/2609.26457" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-body" style="padding-top:2px;">
+        <div class="note-tagrow"><span class="pill alt">arXiv</span><span class="time-tag">2026-09-22</span></div>
+        <h3 class="note-title">AIDE²：讓 AI 研究 Agent 遞迴改進自己的程式碼</h3>
+        <p class="note-summary">系統讓 Agent 對自身程式碼提出修改並在隱藏評測集上打分，連續 8 天自主運行中依序發現 7 項成功改進，且能泛化到 ML 工程、天氣預報等任務，同時 reward hacking 比率由 55% 降至 32%。</p>
+        <p class="note-why"><b>為什麼重要：</b>是「AI 改進 AI 研發流程」遞迴自我改進方向的具體實證，議題具高度前瞻性與潛在風險討論空間。</p>
+        <div class="note-footer"><span class="note-source">arXiv 2609.26457</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ 行業商業 ============ -->
+<section class="section">
+  <div class="section-head">BUSINESS <span class="zh">行業商業</span></div>
+  <div class="notes-grid">
+
+    <a class="note cat-biz" href="https://news.un.org/en/story/2026/09/1168414" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Collections/Production%20Library/2026/09/23-09-2026-UN-Photo-Sam-Altman.jpg/image1170x530cropped.jpg" alt="聯合國安理會" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">OpenAI、Anthropic 執行長同台聯合國安理會簡報 AI 風險</h3>
+        <p class="note-summary">法國主持的安理會會議邀集 Sam Altman、Dario Amodei、Yoshua Bengio 及中國 DeepSeek、Moonshot 等業者共同對話 AI 安全，為安理會首次同時邀請中美前沿 AI 開發商。</p>
+        <p class="note-why"><b>為什麼重要：</b>可能成為後續國際 AI 治理框架（通報機制、跨國驗證標準）的重要伏筆。</p>
+        <div class="note-footer"><span class="note-source">UN News</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-biz" href="https://www.investing.com/news/stock-market-news/softbank-issues-111-billion-in-bonds-in-openai-financing-push-4914266" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-body" style="padding-top:2px;">
+        <div class="note-tagrow"><span class="pill">二手來源</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">軟銀發債 111 億美元，籌資支付對 OpenAI 最後一輪投資</h3>
+        <p class="note-summary">軟銀完成定價共 111 億美元的多幣別債券，用於支付對 OpenAI 第三批（也是最後一批）100 億美元後續投資款，完成後累計對 OpenAI 投資達 646 億美元。</p>
+        <p class="note-why"><b>為什麼重要：</b>AI 巨額融資已延伸至高收益債市場，凸顯 AI 基礎建設資本需求持續攀升。</p>
+        <div class="note-footer"><span class="note-source">Reuters（經 Investing.com 轉載）</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-biz" href="https://www.manilatimes.net/2026/09/23/tmt-newswire/media-outreach-newswire/alibaba-cloud-expands-global-infrastructure-and-ai-portfolio-to-accelerate-enterprise-ai-adoption/2430925" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://manilatimes.net/manilatimes/uploads/images/2026/09/23/1229342.jpg" alt="阿里雲 Apsara 大會" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill alt">官方</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">阿里雲雲棲大會宣布擴張全球基礎設施</h3>
+        <p class="note-summary">宣布未來 12 個月將在土耳其、芬蘭、荷蘭首設雲區域，並擴充馬來西亞、德國、阿聯等地資料中心，同時推出 Smart Studio 等新 AI 工具並與 Panasonic Digital 等企業達成 Qwen 模型整合合作。</p>
+        <p class="note-why"><b>為什麼重要：</b>中國雲端業者持續加碼全球算力布局，形成美系雲端巨頭之外的另一條擴張路線。</p>
+        <div class="note-footer"><span class="note-source">阿里雲官方新聞稿</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+    <a class="note cat-biz" href="https://decrypt.co/379126/openai-ukraine-access-daybreak-ai-cyber-defense-tool" target="_blank" rel="noopener noreferrer">
+      <span class="tape"></span>
+      <div class="note-media"><img src="https://cdn.decrypt.co/wp-content/uploads/2025/07/ukraine-president-volodymyr-zelensky-decrypt-style-scaled-gID_7.jpg" alt="OpenAI Daybreak 烏克蘭" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.note-media').style.display='none'"></div>
+      <div class="note-body">
+        <div class="note-tagrow"><span class="pill">二手來源</span><span class="time-tag">2026-09-23</span></div>
+        <h3 class="note-title">OpenAI 擴大網路防禦計畫「Daybreak」至烏克蘭</h3>
+        <p class="note-summary">OpenAI 於聯合國大會期間宣布與烏克蘭數位轉型部合作，免費開放採 GPT-5.6 Sol 模型的 Daybreak 工具，協助識別並修補民生基礎設施軟體漏洞；此前法國、德國、波蘭已獲類似存取權限。</p>
+        <p class="note-why"><b>為什麼重要：</b>AI 公司正以「網路安全外交」形式介入地緣政治敏感地區。</p>
+        <div class="note-footer"><span class="note-source">Decrypt（引述 OpenAI 公告）</span><span class="note-cta">看原文 →</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ SPOTLIGHT ============ -->
+<section class="section">
+  <div class="section-head">SPOTLIGHT <span class="zh">今日最值得關注的一件事</span></div>
+  <a class="spotlight" href="https://techcrunch.com/2026/09/23/meta-made-a-tamagotchi-like-wearable-for-its-muse-ai-agent/" target="_blank" rel="noopener noreferrer">
+    <span class="pin"></span>
+    <div class="spotlight-media"><img src="https://techcrunch.com/wp-content/uploads/2026/09/mark-zuckerberg-muse-charm-getty.jpg?w=1024" alt="Meta Muse Charm" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.spotlight-media').style.display='none'"></div>
+    <div class="spotlight-body">
+      <span class="pill">產業商業・產品工具</span>
+      <h2>當 AI 助理有了實體：Meta 的「Muse Charm」把 Agent 掛上你的鑰匙圈</h2>
+      <p>Zuckerberg 在 Connect 2026 主題演講中，突襲發表一款掌心大小、外型類似電子雞的穿戴裝置「Muse Charm」，把 Meta 的 AI 代理「Muse」變成一個可隨身攜帶、具指紋感應與即時語音互動的實體角色，預計 12 月假期購物季上市。</p>
+      <p>這款裝置與同場發表的新一代 VR 眼鏡（1,299 美元）、無相機款 Ray-Ban Meta Audio 一起，構成 Meta 從「App 裡的助理」轉向「口袋裡的助理」的完整佈局。</p>
+      <p><b>為什麼值得關注（主觀判斷）：</b>過去一年 AI 競賽的主戰場多集中在模型能力與價格，Muse Charm 代表大型科技公司開始認真押注「AI 助理的實體入口」——一旦消費者習慣把 AI 代理當成隨身物品而非 App，分發權力可能從作業系統與瀏覽器，進一步轉移到硬體本身。它會不會重演智慧手錶或智慧音箱的普及路徑，還是成為又一個叫好不叫座的穿戴裝置，是接下來幾季值得持續追蹤的看點。</p>
+      <div class="note-footer"><span class="note-source">TechCrunch・2026-09-23・第一手報導</span><span class="note-cta">看原文 →</span></div>
+    </div>
+  </a>
+</section>
+
+<footer>
+  <div class="stamp">Verified via WebFetch</div>
+  <p>本日報所有新聞均已實際打開原文頁面確認發佈時間、來源與連結；標示「二手來源」者代表原始一手來源（如官方網站）因技術限制（反爬蟲防護）無法直接開啟，改以可驗證的轉載報導佐證。「為什麼重要」欄位為主觀判斷，已與新聞事實分開標示。圖片均直接引用原文頁面之代表圖片，未做本機下載或 AI 生成配圖。</p>
+</footer>
 
 </div>
 </body>
